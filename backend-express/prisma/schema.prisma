@@ -11,15 +11,67 @@ datasource db {
 }
 
 model Type {
-  id Int @id @default(autoincrement())
-  nom String
+  id        Int         @id @default(autoincrement())
+  nom       String
+  carte     Carte[]
+  condition Condition[]
 }
 
 model Classe {
-  id Int @id @default(autoincrement())
-  nom String
+  id        Int         @id @default(autoincrement())
+  nom       String
+  carte     Carte[]
+  condition Condition[]
 }
 
 model Competence {
+  id               Int                      @id @default(autoincrement())
+  nom              String
+  description      String
+  type             String
+  effet            String
+  valeur           Int
+  cartes           CartesCapacictesActive[]
+  capacite_passive CapacitePassive[]
+}
 
+model CartesCapacictesActive {
+  competence_id Int
+  competence    Competence @relation(fields: [competence_id], references: [id])
+  carte_id      Int
+  carte         Carte      @relation(fields: [carte_id], references: [id])
+  cout_mana     Int
+
+  @@id([competence_id, carte_id])
+}
+
+model CapacitePassive {
+  id            Int        @id @default(autoincrement())
+  competence_id Int
+  competence    Competence @relation(fields: [competence_id], references: [id])
+  carte         Carte[]
+}
+
+model Condition {
+  id          Int    @id @default(autoincrement())
+  nom         String
+  description String
+  type_id     Int
+  type        Type   @relation(fields: [type_id], references: [id])
+  classe_id   Int
+  classe      Classe @relation(fields: [classe_id], references: [id])
+}
+
+model Carte {
+  id                    Int                      @id @default(autoincrement())
+  nom                   String
+  illustration          String
+  puissance             Int
+  type_id               Int
+  type                  Type                     @relation(fields: [type_id], references: [id])
+  classe_id             Int
+  classe                Classe                   @relation(fields: [classe_id], references: [id])
+  competences_active    CartesCapacictesActive[]
+  competence_passive_id Int
+  competence_passive    CapacitePassive          @relation(fields: [competence_passive_id], references: [id])
 }
