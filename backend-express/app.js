@@ -7,8 +7,20 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var cartesRouter = require('./routes/cartes');
 var classesRouter = require('./routes/classes');
+var typesRouter = require('./routes/types');
 
 var app = express();
+var cors = require('cors')
+
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+app.use(cors())
+
+app.listen(port, hostname, () => {
+    console.log(`Serveur demarré sur http://${hostname}:${port}`);
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -20,5 +32,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/cards', cartesRouter);
 app.use('/classes', classesRouter);
+app.use('/types', typesRouter);
 
 module.exports = app;

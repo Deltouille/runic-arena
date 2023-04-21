@@ -1,4 +1,4 @@
-# vue-runic-arena
+# frontend-vue
 
 ## Project setup
 ```
