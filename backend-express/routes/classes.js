@@ -41,7 +41,7 @@ router.post('/', async function(req, res){
 
     const classe = await prisma.classe.create({
         data: {
-            nom: req.body.nom
+            nom: req.body.name
         }
     });
 
@@ -59,7 +59,7 @@ router.put('/', async function(req, res){
         }
     })
 
-    res.status(200).json({ message: 'Auteur bien modifié.'})
+    res.status(200).json({ message: 'Classe bien modifié.'})
 });
 
 module.exports = router;
