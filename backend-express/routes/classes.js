@@ -52,10 +52,10 @@ router.put('/', async function(req, res){
 
     const classe = await prisma.classe.update({
         where: {
-            id: req.body.id,
+            id: req.body.classe_id,
         },
         data: {
-            nom: req.body.id
+            nom: req.body.new_classe_name
         }
     })
 
