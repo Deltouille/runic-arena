@@ -72,7 +72,7 @@
                 </svg>
               </button>
 
-              <button class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full">
+              <button class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="getData(classe.id)">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -84,7 +84,22 @@
         </table>
       </div>
       <div class="w-1/2 bg-white shadow rounded p-4">
-        <h2 class="text-xl font-semibold text-left">Liste des conditions liées a la classe : </h2>
+        <h2 class="text-xl font-semibold text-left mb-2">Liste des conditions liées a la classe : </h2>
+        <TableComponent>
+          <template v-slot:thead>
+              <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">#</th>
+              <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">Nom</th>
+              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">Description</th>
+          </template>
+          <template v-slot:tbody>
+              <tr v-for="condition in listeCondition.condition" :key="condition.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-left">{{ condition.id }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.nom }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.description }}</td>
+              </tr>
+          </template>
+        </TableComponent>
+
       </div>
     </div>
   </div>
@@ -93,6 +108,7 @@
 <script>
 
 import ModalComponent from "@/components/ModalComponent.vue";
+import TableComponent from "@/components/Administration/Table/TableComponent.vue";
 
 export default {
   name: "ViewClasses",
@@ -100,6 +116,7 @@ export default {
   data() {
     return {
       listeClasse: [],
+      listeCondition: [],
       classeId: null,
       newClassName: null,
       showModal: false,
@@ -108,7 +125,8 @@ export default {
   },
 
   components: {
-    ModalComponent
+    ModalComponent,
+    TableComponent,
   },
 
   methods: {
@@ -121,6 +139,7 @@ export default {
       this.typeModal = null;
       this.classeId = null;
       this.newClassName = null;
+      this.listeCondition = [];
       await this.getAllClasses();
     },
 
@@ -213,6 +232,15 @@ export default {
       this.typeModal = type_modal;
       this.showModal = !showModal;
     },
+
+    async getData(classe_id) {
+      try {
+        const response = await fetch(`http://localhost:3000/classes/${classe_id}`);
+        this.listeCondition = await response.json();
+      } catch (e) {
+        console.log(e)
+      }
+    }
 
 
   },
