@@ -233,6 +233,8 @@ export default {
       this.showModal = !showModal;
     },
 
+    //TODO : Faire closeModal
+
     async getData(classe_id) {
       try {
         const response = await fetch(`http://localhost:3000/classes/${classe_id}`);

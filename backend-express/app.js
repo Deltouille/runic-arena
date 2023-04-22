@@ -10,7 +10,8 @@ var classesRouter = require('./routes/classes');
 var typesRouter = require('./routes/types');
 
 var app = express();
-var cors = require('cors')
+var cors = require('cors');
+
 
 
 const hostname = '127.0.0.1';
