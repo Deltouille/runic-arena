@@ -4,6 +4,7 @@ import HomeView from '../views/ViewHome.vue'
 import ViewAdministrationIndex from "@/views/Administration/ViewAdministrationIndex.vue";
 import ViewClasses from "@/views/Administration/Classe/ViewClasses.vue";
 import ViewTypes from "@/views/Administration/Type/ViewTypes.vue";
+import ViewCompetence from "@/views/Administration/Competence/ViewCompetence.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -23,6 +24,9 @@ const router = createRouter({
                 },
                 {
                     path: 'types', name: 'types', component: ViewTypes
+                },
+                {
+                    path: 'competences', name: 'competences', component: ViewCompetence
                 }
             ]
         },

@@ -30,7 +30,7 @@
         <router-link to="" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
           Cartes
         </router-link>
-        <router-link to="" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
+        <router-link to="/administration/competences" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
           Compétences
         </router-link>
         <router-link to="/administration/classes" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">

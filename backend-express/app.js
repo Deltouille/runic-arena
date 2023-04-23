@@ -8,6 +8,7 @@ var usersRouter = require('./routes/users');
 var cartesRouter = require('./routes/cartes');
 var classesRouter = require('./routes/classes');
 var typesRouter = require('./routes/types');
+var competencesRouter = require('./routes/competences');
 
 var app = express();
 var cors = require('cors');
@@ -34,5 +35,8 @@ app.use('/users', usersRouter);
 app.use('/cards', cartesRouter);
 app.use('/classes', classesRouter);
 app.use('/types', typesRouter);
+app.use('/competences', competencesRouter);
+
+
 
 module.exports = app;
