@@ -24,6 +24,7 @@ CREATE TABLE "Competence" (
 CREATE TABLE "CartesCapacictesActive" (
     "competence_id" INTEGER NOT NULL,
     "carte_id" INTEGER NOT NULL,
+    "cout_mana" INTEGER NOT NULL,
 
     PRIMARY KEY ("competence_id", "carte_id"),
     CONSTRAINT "CartesCapacictesActive_competence_id_fkey" FOREIGN KEY ("competence_id") REFERENCES "Competence" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -58,5 +59,6 @@ CREATE TABLE "Carte" (
     "classe_id" INTEGER NOT NULL,
     "competence_passive_id" INTEGER NOT NULL,
     CONSTRAINT "Carte_type_id_fkey" FOREIGN KEY ("type_id") REFERENCES "Type" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Carte_classe_id_fkey" FOREIGN KEY ("classe_id") REFERENCES "Classe" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Carte_classe_id_fkey" FOREIGN KEY ("classe_id") REFERENCES "Classe" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Carte_competence_passive_id_fkey" FOREIGN KEY ("competence_passive_id") REFERENCES "CapacitePassive" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );

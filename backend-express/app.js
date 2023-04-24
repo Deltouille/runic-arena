@@ -13,8 +13,6 @@ var competencesRouter = require('./routes/competences');
 var app = express();
 var cors = require('cors');
 
-
-
 const hostname = '127.0.0.1';
 const port = 3000;
 

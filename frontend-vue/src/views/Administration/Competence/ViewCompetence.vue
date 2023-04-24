@@ -19,7 +19,7 @@
           <InputComponent title="valeur" type="number" @update="(e) => { addPropertyToCompetenceObject(e, 'valeur') }"/>
         </div>
         <div class="flex justify-center gap-4">
-          <button class="px-4 py-2 border-green-500 border-2 text-green-500 rounded hover:bg-green-500 hover:text-white transition-colors duration-200 font-semibold" @click="updateType(typeId, newTypeName)">Modifier</button>
+          <button class="px-4 py-2 border-green-500 border-2 text-green-500 rounded hover:bg-green-500 hover:text-white transition-colors duration-200 font-semibold" @click="updateCompetence(competence)">Modifier</button>
           <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-semibold" @click="showModal = false">Annuler</button>
         </div>
       </div>
@@ -78,7 +78,7 @@
                   </svg>
                 </button>
 
-                <button class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="getData(competence)">
+                <button class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="getCompetence(competence)">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -166,6 +166,34 @@ export default {
 
       await this.resetDataVariables();
 
+    },
+
+    async updateCompetence(competence) {
+      try{
+        const response = await fetch(`http://localhost:3000/competences`, {
+          method: "PUT",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(competence)
+        });
+        console.log(response);
+      }catch (e) {
+        console.log(e)
+      }
+      await this.resetDataVariables();
+
+    },
+
+    async getCompetence(competence) {
+      try{
+        const response = await fetch(`http://localhost:3000/competences/${competence.id}`);
+        const data = await response.json();
+        this.competence = data;
+      }catch (e) {
+        console.log(e)
+      }
     },
 
     openModal(competence, type_modal, showModal) {

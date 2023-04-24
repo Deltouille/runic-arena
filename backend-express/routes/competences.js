@@ -60,10 +60,14 @@ router.put('/', async function(req, res){
 
     const competence = await prisma.competence.update({
         where: {
-            id: parseInt(req.body.type_id),
+            id: parseInt(req.body.id),
         },
         data: {
-            nom: req.body.new_type_name
+            nom: req.body.nom,
+            description: req.body.description,
+            type: req.body.type,
+            effet: req.body.effet,
+            valeur: parseInt(req.body.valeur),
         }
     })
 
