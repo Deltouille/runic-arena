@@ -15,7 +15,20 @@ router.get('/:id', async function(req, res){
         where: {
             id: parseInt(req.params.id)
         },include: {
-            carte: true,
+            carte: {
+                include: {
+                    competence_passive: {
+                        include: {
+                            competence: true
+                        }
+                    },
+                    competences_active: {
+                        include: {
+                            competence: true
+                        }
+                    }
+                }
+            },
             condition: true,
         }
     });

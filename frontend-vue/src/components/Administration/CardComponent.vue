@@ -1,5 +1,5 @@
 <template>
-  <article class="bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 shadow rounded hover:border-red-500 hover:border-2 duration-200 hover:shadow-lg hover:shadow-red-900 p-2">
+  <article class="bg-gradient-to-r from-gray-900 via-gray-600 to-gray-900 shadow rounded duration-200 hover:shadow-lg hover:shadow-red-900 p-2">
     <div class="flex bg-gray-50 p-1 rounded justify-between mb-2">
       <h2 class="font-semibold text-gray-900 text-left">{{ data.nom }}</h2>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-900">

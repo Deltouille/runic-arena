@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <ModalComponent title="Classe" v-if="showModal" @close="showModal = false">
+    <ModalComponent title="Classe" v-if="showModal" @close="closeModal()">
       <div class="flex flex-col gap-5" v-if="typeModal === 'delete_modal'">
         <p>Voulez-vous vraiment supprimer le type <b>{{ type.nom }}</b> ?</p>
         <p>Vous supprimerez aussi toutes les cartes associèes a ce type.</p>
@@ -90,8 +90,11 @@
         </TableComponent>
       </div>
     </div>
-    <div class="grid grid-cols-4">
-      <CardComponent v-for="carte in infoType.carte" :key="carte.id" :data="carte"/>
+    <div class="w-full mt-5 bg-white rounded p-4 shadow">
+      <h2 class="text-xl font-semibold">Liste des cartes associèes au type : {{ type.nom }}</h2>
+      <div class="grid grid-cols-4 mt-5">
+        <CardComponent v-for="carte in infoType.carte" :key="carte.id" :data="carte"/>
+      </div>
     </div>
   </div>
 </template>
@@ -123,6 +126,10 @@ export default {
       this.showModal = !showModal;
     },
 
+    closeModal(){
+      this.resetDataVariables();
+    },
+
     addPropertyToCompetenceObject(value, propriete) {
       this.type[propriete] = value;
     },
@@ -138,6 +145,7 @@ export default {
       try {
         const response = await fetch(`http://localhost:3000/types/${type.id}`);
         this.infoType = await response.json();
+        console.log(this.infoType);
       } catch (e) {
         console.log(e)
       }
