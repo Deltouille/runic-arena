@@ -41,7 +41,7 @@ router.post('/', async function(req, res){
 
     const type = await prisma.type.create({
         data: {
-            nom: req.body.name
+            nom: req.body.nom
         }
     });
 
@@ -49,13 +49,12 @@ router.post('/', async function(req, res){
 });
 
 router.put('/', async function(req, res){
-
     const type = await prisma.type.update({
         where: {
-            id: parseInt(req.body.type_id),
+            id: parseInt(req.body.id),
         },
         data: {
-            nom: req.body.new_type_name
+            nom: req.body.nom
         }
     })
 

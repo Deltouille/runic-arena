@@ -6,6 +6,7 @@ import ViewClasses from "@/views/Administration/Classe/ViewClasses.vue";
 import ViewTypes from "@/views/Administration/Type/ViewTypes.vue";
 import ViewCompetence from "@/views/Administration/Competence/ViewCompetence.vue";
 import ViewCartes from "@/views/Administration/Carte/ViewCartes.vue";
+import ViewCreateCard from "@/views/Administration/Carte/ViewCreateCard.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -21,16 +22,29 @@ const router = createRouter({
             component: ViewAdministrationIndex,
             children : [
                 {
-                    path: 'classes', name: 'classes', component: ViewClasses
+                    path: 'classes',
+                    name: 'classes',
+                    component: ViewClasses
                 },
                 {
-                    path: 'types', name: 'types', component: ViewTypes
+                    path: 'types',
+                    name: 'types',
+                    component: ViewTypes
                 },
                 {
-                    path: 'competences', name: 'competences', component: ViewCompetence
+                    path: 'competences',
+                    name: 'competences',
+                    component: ViewCompetence
                 },
                 {
-                    path: 'cartes', name: 'cartes', component: ViewCartes
+                    path: 'cartes',
+                    name: 'cartes',
+                    component: ViewCartes,
+                },
+                {
+                    path: 'addCarte',
+                    name: 'addCarte',
+                    component: ViewCreateCard
                 }
             ]
         },

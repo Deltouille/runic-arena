@@ -105,8 +105,7 @@ export default {
       competence: {},
       typeModal: null,
       showModal: false,
-    }
-  },
+    }  },
 
   components: {
     ModalComponent,

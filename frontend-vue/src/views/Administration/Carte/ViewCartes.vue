@@ -1,62 +1,43 @@
 <template>
   <div class="w-full">
     <h1 class="text-4xl mb-10 font-bold">Administration des cartes</h1>
-    <div class="grid grid-cols-3 gap-5">
-      <article class="w-4/5 bg-gray-900 shadow rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-red-500 p-2">
-        <h2 class="font-semibold text-gray-900 text-left bg-gray-50 p-1 rounded">Hyacinthe NGOMA</h2>
-        <img class="rounded-lg py-2 h-36 w-full" src="https://images.unsplash.com/photo-1468657988500-aca2be09f4c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
-        <div class="bg-white w-full rounded-lg text-left p-2">
-          <p class="font-semibold">Skill 1</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill 2</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill Passif</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-        </div>
-      </article>
-      <article class="w-4/5 bg-gray-900 shadow rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-red-500 p-2">
-        <h2 class="font-semibold text-gray-900 text-left bg-gray-50 p-1 rounded">Hyacinthe NGOMA</h2>
-        <img class="rounded-lg py-2 h-36 w-full" src="https://images.unsplash.com/photo-1468657988500-aca2be09f4c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
-        <div class="bg-white w-full rounded-lg text-left p-2">
-          <p class="font-semibold">Skill 1</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill 2</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill Passif</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-        </div>
-      </article>
-      <article class="w-4/5 bg-gray-900 shadow rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-red-500 p-2">
-        <h2 class="font-semibold text-gray-900 text-left bg-gray-50 p-1 rounded">Hyacinthe NGOMA</h2>
-        <img class="rounded-lg py-2 h-36 w-full" src="https://images.unsplash.com/photo-1468657988500-aca2be09f4c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
-        <div class="bg-white w-full rounded-lg text-left p-2">
-          <p class="font-semibold">Skill 1</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill 2</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill Passif</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-        </div>
-      </article>
-      <article class="w-4/5 bg-gray-900 shadow rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-red-500 p-2">
-        <h2 class="font-semibold text-gray-900 text-left bg-gray-50 p-1 rounded">Hyacinthe NGOMA</h2>
-        <img class="rounded-lg py-2 h-36 w-full" src="https://images.unsplash.com/photo-1468657988500-aca2be09f4c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
-        <div class="bg-white w-full rounded-lg text-left p-2">
-          <p class="font-semibold">Skill 1</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill 2</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-          <p class="font-semibold">Skill Passif</p>
-          <p class="text-sm italic font-thin">Ceci est la premère compétence</p>
-        </div>
-      </article>
+    <router-link to="/administration/addCarte">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    </router-link>
+    <div class="grid grid-cols-4 gap-5">
+      <CardComponent v-for="carte in listeCartes" :key="carte.id" :data="carte"/>
     </div>
   </div>
 </template>
 
 <script>
+import CardComponent from "@/components/Administration/CardComponent.vue";
 export default {
-  name: "ViewCartes"
+  name: "ViewCartes",
+  data() {
+    return {
+      listeCartes: []
+    }
+  },
+  components: {
+    CardComponent
+  },
+  methods: {
+    async getAllCartes() {
+      try {
+        const response = await fetch("http://localhost:3000/cards");
+        const data = await response.json();
+        this.listeCartes = data;
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
+  mounted() {
+    this.getAllCartes();
+  }
 }
 </script>
 

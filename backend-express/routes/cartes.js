@@ -6,7 +6,20 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
 router.get('/', async function(req, res, next) {
-    const cartes = await prisma.carte.findMany();
+    const cartes = await prisma.carte.findMany({
+        include: {
+            competences_active: {
+                include: {
+                    competence: true
+                }
+            },
+            competence_passive: {
+                include: {
+                    competence: true
+                }
+            },
+        }
+    });
     res.send(cartes);
 });
 
@@ -15,7 +28,11 @@ router.get('/:id', async function(req, res){
         where: {
             id: parseInt(req.params.id)
         },include: {
-            competences_active: true,
+            competences_active: {
+                include: {
+                    competence: true
+                }
+            },
             competence_passive: true,
         }
     });
