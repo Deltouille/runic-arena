@@ -1,6 +1,6 @@
 <template>
-  <thead class="bg-gray-200">
-    <tr>
+  <thead class="bg-gradient-to-r from-gray-900 via-gray-500 to-gray-800">
+    <tr class="rounded text-white">
       <slot></slot>
     </tr>
   </thead>

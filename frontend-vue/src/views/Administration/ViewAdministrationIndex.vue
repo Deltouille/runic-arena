@@ -15,7 +15,7 @@
     </div>
 
     <!-- sidebar -->
-    <div class="sidebar bg-gray-50 border-r text-gray-800 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
+    <div class="sidebar bg-gray-950 border-r text-gray-800 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
 
       <!-- logo -->
       <a href="#" class="text-white flex items-center space-x-2 px-4">
@@ -24,26 +24,26 @@
 
       <!-- nav -->
       <nav class="text-left">
-        <router-link to="/administration" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
+        <router-link to="/administration" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 text-white font-semibold">
           Dashboard
         </router-link>
-        <router-link to="/administration/cartes" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
+        <router-link to="/administration/cartes" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 text-white font-semibold">
           Cartes
         </router-link>
-        <router-link to="/administration/competences" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
+        <router-link to="/administration/competences" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 text-white font-semibold">
           Compétences
         </router-link>
-        <router-link to="/administration/classes" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
+        <router-link to="/administration/classes" class="block py-2.5 px-4 rounded transition-all duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 text-white font-semibold">
           Classes
         </router-link>
-        <router-link to="/administration/types" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
+        <router-link to="/administration/types" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 text-white font-semibold">
           Types
         </router-link>
       </nav>
     </div>
 
     <!-- content -->
-    <div class="flex w-full justify-center p-10 bg-gray-100">
+    <div class="flex w-full justify-center p-10 bg-white">
       <router-view></router-view>
     </div>
 

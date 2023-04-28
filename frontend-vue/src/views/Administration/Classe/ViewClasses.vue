@@ -87,16 +87,16 @@
         <h2 class="text-xl font-semibold text-left mb-2">Liste des conditions liées a la classe : </h2>
         <TableComponent>
           <template v-slot:thead>
-              <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">#</th>
-              <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">Nom</th>
-              <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">Description</th>
+            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">#</th>
+            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">Nom</th>
+            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">Description</th>
           </template>
           <template v-slot:tbody>
-              <tr v-for="condition in listeCondition.condition" :key="condition.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-left">{{ condition.id }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.nom }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.description }}</td>
-              </tr>
+            <tr v-for="condition in listeCondition.condition" :key="condition.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-left">{{ condition.id }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.nom }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.description }}</td>
+            </tr>
           </template>
         </TableComponent>
 
@@ -201,7 +201,7 @@ export default {
       }catch (e) {
         console.log(e)
       }
-      
+
       await this.resetDataVariables();
 
     },

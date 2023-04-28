@@ -1,5 +1,5 @@
 <template>
-  <table class="w-full p-4">
+  <table class="w-full p-4 border border-gray-200">
     <TableHead>
         <slot name="thead"></slot>
     </TableHead>

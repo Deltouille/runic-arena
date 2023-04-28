@@ -29,11 +29,11 @@
       </div>
     </ModalComponent>
 
-    <h1 class="text-4xl mb-10 font-bold">Administration des classes</h1>
-    <div class="flex w-full gap-5">
-      <div class="w-1/2 bg-white shadow rounded p-4">
+    <h1 class="text-4xl mb-10 font-bold text-gray-950 text-left">ADMINISTRATION DES CLASSES</h1>
+    <div class="flex flex-col w-full gap-5">
+      <div class="overflow-hidden">
         <div class="flex justify-between mb-2">
-          <h2 class="text-xl font-semibold">Liste des classes</h2>
+          <h2 class="text-xl font-semibold text-gray-950">LISTE DES CLASSES</h2>
           <button class="border-green-600 border-2 text-green-500 hover:text-white hover:bg-green-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="openModal(null, 'add_modal', showModal)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -42,9 +42,9 @@
         </div>
         <TableComponent>
           <template v-slot:thead>
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">#</th>
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">Nom</th>
-            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center"></th>
+            <th scope="col" class="text-sm font-semibold text-white px-6 py-4 text-left">#</th>
+            <th scope="col" class="text-sm font-semibold text-white px-6 py-4 text-left">Nom</th>
+            <th scope="col" class="text-sm font-medium text-white px-6 py-4 text-center"></th>
           </template>
           <template v-slot:tbody>
             <tr v-for="type in listeTypes" :key="type.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
@@ -72,13 +72,13 @@
           </template>
         </TableComponent>
       </div>
-      <div class="w-1/2 bg-white shadow rounded p-4">
-        <h2 class="text-xl font-semibold text-left mb-2">Liste des conditions liées a la classe : </h2>
+      <div class="overflow-hidden mt-5">
+        <h2 class="text-xl font-semibold text-left mb-2 text-gray-950">LISTE DES CONDITIONS QUI ONT LE TYPE : {{ type.nom }} </h2>
         <TableComponent>
           <template v-slot:thead>
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">#</th>
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">Nom</th>
-            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">Description</th>
+            <th scope="col" class="text-sm font-semibold text-white px-6 py-4 text-left">#</th>
+            <th scope="col" class="text-sm font-semibold text-white px-6 py-4 text-left">Nom</th>
+            <th scope="col" class="text-sm font-medium text-white px-6 py-4 text-center">Description</th>
           </template>
           <template v-slot:tbody>
             <tr v-for="condition in infoType.condition" :key="condition.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
@@ -89,11 +89,11 @@
           </template>
         </TableComponent>
       </div>
-    </div>
-    <div class="w-full mt-5 bg-white rounded p-4 shadow">
-      <h2 class="text-xl font-semibold">Liste des cartes associèes au type : {{ type.nom }}</h2>
-      <div class="grid grid-cols-4 mt-5">
-        <CardComponent v-for="carte in infoType.carte" :key="carte.id" :data="carte"/>
+      <div class="w-full mt-5">
+        <h2 class="text-xl font-semibold text-left text-gray-950">LISTE DES CARTES AYANT LE TYPE : {{ type.nom }}</h2>
+        <div class="grid grid-cols-4 mt-5">
+          <CardComponent v-for="carte in infoType.carte" :key="carte.id" :data="carte"/>
+        </div>
       </div>
     </div>
   </div>
