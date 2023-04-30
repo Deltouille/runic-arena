@@ -1,9 +1,8 @@
 <template>
-  <tbody>
+  <tbody class="">
     <slot></slot>
   </tbody>
 </template>
-
 <script>
 export default {
   name: "TableBody"

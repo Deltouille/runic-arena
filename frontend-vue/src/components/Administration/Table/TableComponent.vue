@@ -1,12 +1,14 @@
 <template>
-  <table class="w-full p-4 border border-gray-200">
-    <TableHead>
+  <div class="overflow-x-auto">
+    <table class="table w-full">
+      <TableHead>
         <slot name="thead"></slot>
-    </TableHead>
-    <TableBody>
-      <slot name="tbody"></slot>
-    </TableBody>
-  </table>
+      </TableHead>
+      <TableBody>
+        <slot name="tbody"></slot>
+      </TableBody>
+    </table>
+  </div>
 </template>
 
 <script>

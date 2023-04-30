@@ -1,146 +1,134 @@
 <template>
-  <div class="w-full">
-    <ModalComponent title="Classe" v-if="showModal" @close="showModal = false">
-      <div class="flex flex-col gap-5" v-if="typeModal === 'delete_modal'">
-        <p>Voulez-vous vraiment supprimer la classe ... ?</p>
-        <p>Vous supprimerez aussi toutes les cartes associèes a cette classe.</p>
-        <div class="flex justify-center gap-4">
-          <button class="px-4 py-2 border-red-500 border-2 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-200 font-semibold" @click="deleteClasse(classeId)">Supprimer</button>
-          <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-semibold" @click="showModal = false">Annuler</button>
+  <RightDrawer>
+    <template v-slot:page-content>
+      <ModalComponent :title="classe.nom">
+        <p class="py-4">Êtes-vous sûr de vouloir supprimer cette classe ?</p>
+        <p class="py-4">Cela supprimeras toutes les cartes associèes.</p>
+        <div class="modal-action">
+          <label for="modal" class="btn btn-outline btn-error" @click="deleteClasse(classe)">Supprimer</label>
+          <label for="modal" class="btn" @click="closeRightDrawerOrModal()">Annuler</label>
+        </div>
+      </ModalComponent>
+      <div class="w-5/6 mx-auto p-6">
+        <h1 class="text-3xl mb-10 font-bold text-gray-900 text-left">CLASSES</h1>
+        <div class="liste-classes">
+          <div class="flex justify-between mb-2">
+            <h1 class="text-2xl text-gray-700 text-left">Liste des classes</h1>
+            <label class="border-green-600 border-2 text-green-500 hover:text-white hover:bg-green-600 shadow hover:scale-105 duration-200 rounded-full p-1 cursor-pointer" for="side-drawer" @click="openRightDrawer('create', null)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </label>
+          </div>
+          <TableComponent>
+            <template v-slot:thead>
+              <th scope="col" class="text-left">#</th>
+              <th scope="col" class="text-left">Nom</th>
+              <th scope="col" class="text-center"></th>
+            </template>
+            <template v-slot:tbody>
+              <tr v-for="classe in listeClasses" :key="classe.id" class="">
+                <td class="text-left">{{ classe.id }}</td>
+                <td class="text-left">{{ classe.nom }}</td>
+                <td class="flex space-x-2 justify-center">
+                  <label class="border-red-600 border-2 text-red-500 hover:text-white hover:bg-red-600 shadow hover:scale-105 duration-200 p-1 rounded-full cursor-pointer" for="modal" @click="openModal(classe)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                  </label>
+
+                  <label class="border-blue-600 border-2 text-blue-500 hover:text-white hover:bg-blue-600 shadow hover:scale-105 duration-200 p-1 rounded-full cursor-pointer" for="side-drawer" @click="openRightDrawer('update', classe)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                    </svg>
+                  </label>
+
+                  <button class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </template>
+          </TableComponent>
+        </div>
+      </div>
+    </template>
+    <template v-slot:drawer-content>
+      <div v-if="typeAction === 'update'">
+        <h1 class="font-bold text-xl uppercase mb-6">Modification : {{ classe.nom }}</h1>
+        <div class="w-4/5 mx-auto">
+          <InputComponent type="text" title="Modification du nom" :value="classe.nom" @change="(e) => { classe.nom = e.target.value }"/>
+          <div class="flex gap-5 justify-center mt-6">
+            <label class="btn btn-outline btn-primary" for="side-drawer" @click="updateClasse(classe)">Modifier</label>
+            <label class="btn btn-active" for="side-drawer">Annuler</label>
+          </div>
         </div>
       </div>
 
-      <div class="flex flex-col gap-5 px-4" v-if="typeModal === 'update_modal'">
-        <div class="flex flex-col">
-          <label for="update-classe-name" class="text-left text-gray-900 font-bold">
-            Nouveau nom
-          </label>
-          <input name="update-classe-name" type="text" class="border-2 border-gray-500 rounded px-4 py-2 focus:border-blue-600" @change="(e) => { newClassName = e.target.value }"/>
-        </div>
-        <div class="flex justify-center gap-4">
-          <button class="px-4 py-2 border-green-500 border-2 text-green-500 rounded hover:bg-green-500 hover:text-white transition-colors duration-200 font-semibold" @click="updateClasse(classeId, newClassName)">Modifier</button>
-          <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-semibold" @click="showModal = false">Annuler</button>
+      <div v-if="typeAction === 'create'">
+        <h1 class="font-bold text-xl uppercase mb-6">Création d'une classe</h1>
+        <div class="w-4/5 mx-auto">
+          <InputComponent type="text" title="Nom de la nouvelle classe" :value="classe.nom" @change="(e) => { classe.nom = e.target.value }"/>
+          <div class="flex gap-5 justify-center mt-6">
+            <label class="btn btn-outline btn-primary" for="side-drawer" @click="addClasse(classe)">Créer</label>
+            <label class="btn btn-active" for="side-drawer">Annuler</label>
+          </div>
         </div>
       </div>
-
-      <div class="flex flex-col gap-5 px-4" v-if="typeModal === 'add_modal'">
-        <div class="flex flex-col">
-          <label for="update-classe-name" class="text-left text-gray-900 font-bold">
-            Nouvelle
-          </label>
-          <input name="update-classe-name" type="text" class="border-2 border-gray-500 rounded px-4 py-2 focus:border-blue-600" @change="(e) => { newClassName = e.target.value }"/>
-        </div>
-        <div class="flex justify-center gap-4">
-          <button class="px-4 py-2 border-green-500 border-2 text-green-500 rounded hover:bg-green-500 hover:text-white transition-colors duration-200 font-semibold" @click="addClasse(newClassName)">Ajouter</button>
-          <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded font-semibold" @click="showModal = false">Annuler</button>
-        </div>
-      </div>
-    </ModalComponent>
-    <h1 class="text-4xl mb-10 font-bold">Administration des classes</h1>
-    <div class="flex w-full gap-5">
-      <div class="w-1/2 bg-white shadow rounded p-4">
-        <div class="flex justify-between mb-2">
-          <h2 class="text-xl font-semibold">Liste des classes</h2>
-          <button class="border-green-600 border-2 text-green-500 hover:text-white hover:bg-green-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="openModal(null, 'add_modal', showModal)">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-          </button>
-        </div>
-        <table class="w-full p-4">
-          <thead class="bg-gray-200">
-          <tr class="">
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">#</th>
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">Nom</th>
-            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center"></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="classe in listeClasse" :key="classe.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-left">{{ classe.id }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ classe.nom }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex space-x-2 justify-center">
-              <button class="border-red-600 border-2 text-red-500 hover:text-white hover:bg-red-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="openModal(classe.id, 'delete_modal', showModal)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                </svg>
-              </button>
-
-              <button class="border-blue-600 border-2 text-blue-500 hover:text-white hover:bg-blue-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="openModal(classe.id, 'update_modal', showModal)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                </svg>
-              </button>
-
-              <button class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full" @click="getData(classe.id)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="w-1/2 bg-white shadow rounded p-4">
-        <h2 class="text-xl font-semibold text-left mb-2">Liste des conditions liées a la classe : </h2>
-        <TableComponent>
-          <template v-slot:thead>
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">#</th>
-            <th scope="col" class="text-sm font-semibold text-gray-900 px-6 py-4 text-left">Nom</th>
-            <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-center">Description</th>
-          </template>
-          <template v-slot:tbody>
-            <tr v-for="condition in listeCondition.condition" :key="condition.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-left">{{ condition.id }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.nom }}</td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-light text-gray-900 text-left">{{ condition.description }}</td>
-            </tr>
-          </template>
-        </TableComponent>
-
-      </div>
-    </div>
-  </div>
+    </template>
+  </RightDrawer>
 </template>
 
 <script>
-
-import ModalComponent from "@/components/ModalComponent.vue";
 import TableComponent from "@/components/Administration/Table/TableComponent.vue";
+import RightDrawer from "@/components/Administration/RightDrawer.vue";
+import InputComponent from "@/components/Administration/InputComponent.vue";
+import ModalComponent from "@/components/ModalComponent.vue";
 
 export default {
   name: "ViewClasses",
 
   data() {
     return {
-      listeClasse: [],
-      listeCondition: [],
-      classeId: null,
-      newClassName: null,
-      showModal: false,
-      typeModal: null,
+      listeClasses: [],
+      typeAction: null,
+      classe: {},
     }
   },
 
   components: {
     ModalComponent,
+    InputComponent,
+    RightDrawer,
     TableComponent,
   },
 
   methods: {
-    /**
-     * Fonction permettant de remettre les variables contenues dans data() par defaut
-     * @returns {Promise<void>}
-     */
-    async resetDataVariables() {
-      this.showModal = false;
-      this.typeModal = null;
-      this.classeId = null;
-      this.newClassName = null;
-      this.listeCondition = [];
+    async resetData(){
+      this.typeAction = null;
+      this.classe = {};
       await this.getAllClasses();
+    },
+
+    openRightDrawer(type_action, classe){
+      this.typeAction = type_action;
+
+      if(classe !== null){
+        this.classe = classe;
+      }else{
+        this.classe = {};
+      }
+    },
+
+    openModal(classe){
+      this.classe = classe;
+    },
+
+    async closeRightDrawerOrModal(){
+      await this.resetData();
     },
 
     /**
@@ -150,20 +138,42 @@ export default {
     async getAllClasses() {
       try {
         const response = await fetch("http://localhost:3000/classes");
-        this.listeClasse = await response.json();
+        this.listeClasses = await response.json();
       } catch (e) {
         console.log(e)
       }
     },
 
     /**
-     * Fonction qui permet de supprimer une classe grâce a l'API
-     * @param classe_id
+     * Fonction qui permet de modifier le nom d'une classe grâce a l'API
      * @returns {Promise<void>}
+     * @param classe
      */
-    async deleteClasse(classe_id) {
+    async updateClasse(classe) {
       try{
-        const response = await fetch(`http://localhost:3000/classes/${classe_id}`, {
+        const response = await fetch(`http://localhost:3000/classes`, {
+          method: "PUT",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(classe)
+        });
+        console.log(response);
+      }catch (e) {
+        console.log(e)
+      }
+      await this.resetData();
+    },
+
+    /**
+     * Fonction qui permet de supprimer une classe grâce a l'API
+     * @returns {Promise<void>}
+     * @param classe
+     */
+    async deleteClasse(classe) {
+      try{
+        const response = await fetch(`http://localhost:3000/classes/${classe.id}`, {
           method: "DELETE",
           headers: {
             'Accept': 'application/json',
@@ -174,43 +184,15 @@ export default {
       }catch (e) {
         console.log(e)
       }
-      await this.resetDataVariables();
+      await this.resetData();
     },
 
     /**
-     * Fonction qui permet de modifier le nom d'une classe grâce a l'API
-     * @param classe_id Integer
-     * @param newClasseName String
+     * Fonction permet de créer une classe grâce a l'API
      * @returns {Promise<void>}
+     * @param classe
      */
-    async updateClasse(classe_id, new_classe_name) {
-      const data = {
-        classe_id, new_classe_name
-      };
-
-      try{
-        const response = await fetch(`http://localhost:3000/classes`, {
-          method: "PUT",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-        console.log(response);
-      }catch (e) {
-        console.log(e)
-      }
-
-      await this.resetDataVariables();
-
-    },
-
-    async addClasse(name) {
-      const data = {
-        name
-      };
-
+    async addClasse(classe) {
       try{
         const response = await fetch(`http://localhost:3000/classes`, {
           method: "POST",
@@ -218,38 +200,19 @@ export default {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(classe)
         });
         console.log(response);
       }catch (e) {
         console.log(e)
       }
-      await this.resetDataVariables();
+      await this.resetData();
 
     },
-
-    openModal(classe_id, type_modal, showModal) {
-      this.classeId = classe_id;
-      this.typeModal = type_modal;
-      this.showModal = !showModal;
-    },
-
-    //TODO : Faire closeModal
-
-    async getData(classe_id) {
-      try {
-        const response = await fetch(`http://localhost:3000/classes/${classe_id}`);
-        this.listeCondition = await response.json();
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-
   },
 
   mounted() {
-    this.getAllClasses()
+    this.getAllClasses();
   }
 }
 </script>

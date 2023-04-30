@@ -41,7 +41,7 @@ router.post('/', async function(req, res){
 
     const classe = await prisma.classe.create({
         data: {
-            nom: req.body.name
+            nom: req.body.nom
         }
     });
 
@@ -52,10 +52,10 @@ router.put('/', async function(req, res){
 
     const classe = await prisma.classe.update({
         where: {
-            id: req.body.classe_id,
+            id: req.body.id,
         },
         data: {
-            nom: req.body.new_classe_name
+            nom: req.body.nom
         }
     })
 
