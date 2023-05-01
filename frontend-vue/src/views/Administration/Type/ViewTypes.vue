@@ -43,12 +43,12 @@
                     </svg>
                   </label>
 
-                  <button class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full">
+                  <label class="border-amber-600 border-2 text-amber-500 hover:text-white hover:bg-amber-600 shadow hover:scale-105 duration-200 p-1 rounded-full cursor-pointer" for="side-drawer"  @click="openRightDrawer('read', type)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                  </button>
+                  </label>
                 </td>
               </tr>
             </template>
@@ -76,6 +76,50 @@
             <label class="btn btn-outline btn-primary" for="side-drawer" @click="addType(type)">Créer</label>
             <label class="btn btn-active" for="side-drawer">Annuler</label>
           </div>
+        </div>
+      </div>
+
+      <div v-if="typeAction === 'read'">
+        <h1 class="font-bold text-xl uppercase mb-6">Détail du type : {{ type.nom }}</h1>
+        <div class="w-4/5 mx-auto">
+          <div class="liste-conditions mb-10">
+            <div class="flex flex-col mb-2">
+              <h1 class="text-2xl text-gray-700 text-left">Liste des compétences liées a cette classe</h1>
+              <TableComponent>
+                <template v-slot:thead>
+                  <th scope="col" class="text-left">#</th>
+                  <th scope="col" class="text-left">Nom</th>
+                  <th scope="col" class="text-left">Description</th>
+                </template>
+                <template v-slot:tbody>
+                  <tr v-for="condition in type.condition" :key="condition.id" class="">
+                    <td class="text-left">{{ condition.id }}</td>
+                    <td class="text-left">{{ condition.nom }}</td>
+                    <td class="text-left">{{ condition.description }}</td>
+                  </tr>
+                </template>
+              </TableComponent>
+            </div>
+          </div>
+          <div class="liste-cartes">
+            <div class="flex flex-col mb-2">
+              <h1 class="text-2xl text-gray-700 text-left">Liste des cartes liées a ce type</h1>
+              <TableComponent>
+                <template v-slot:thead>
+                  <th scope="col" class="text-left">#</th>
+                  <th scope="col" class="text-left">Nom</th>
+                </template>
+                <template v-slot:tbody>
+                  <tr v-for="carte in type.carte" :key="carte.id" class="">
+                    <td class="text-left">{{ carte.id }}</td>
+                    <td class="text-left">{{ carte.nom }}</td>
+                  </tr>
+                </template>
+              </TableComponent>
+            </div>
+          </div>
+
+          <label class="btn btn-active" for="side-drawer">Fermer</label>
         </div>
       </div>
     </template>
@@ -113,13 +157,17 @@ export default {
       await this.getAllTypes();
     },
 
-    openRightDrawer(type_action, type){
+    async openRightDrawer(type_action, type){
       this.typeAction = type_action;
 
       if(type !== null){
         this.type = type;
       }else{
         this.type = {};
+      }
+
+      if(type_action === 'read') {
+        await this.getTypeDetails(type);
       }
     },
 
@@ -140,6 +188,15 @@ export default {
         const response = await fetch("http://localhost:3000/types");
         this.listeTypes = await response.json();
       } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async getTypeDetails(type) {
+      try {
+        const response = await fetch(`http://localhost:3000/types/${type.id}`)
+        this.type = await response.json();
+      }catch (e) {
         console.log(e)
       }
     },

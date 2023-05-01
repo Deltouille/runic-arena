@@ -75,11 +75,11 @@
       <div v-if="typeAction === 'create'">
         <h1 class="font-bold text-xl uppercase mb-6">Création d'une competence</h1>
         <div class="w-4/5 mx-auto">
-          <InputComponent type="text" title="Nom de la nouvelle competence" :value="competence.nom" @change="(e) => { competence.nom = e.target.value }" disabled />
-          <InputComponent type="textarea" title="Description de la nouvelle competence" :value="competence.description" @change="(e) => { competence.description = e.target.value }" disabled />
+          <InputComponent type="text" title="Nom de la nouvelle competence" :value="competence.nom" @change="(e) => { competence.nom = e.target.value }" />
+          <InputComponent type="textarea" title="Description de la nouvelle competence" :value="competence.description" @change="(e) => { competence.description = e.target.value }" />
           <InputComponent type="text" title="Type de la nouvelle competence" :value="competence.type" @change="(e) => { competence.type = e.target.value }"/>
-          <InputComponent type="text" title="Effet de la nouvelle competence" :value="competence.effet" @change="(e) => { competence.effet = e.target.value }" disabled />
-          <InputComponent type="number" title="Valeur de la nouvelle competence" :value="competence.valeur" @change="(e) => { competence.valeur = e.target.value }" disabled />
+          <InputComponent type="text" title="Effet de la nouvelle competence" :value="competence.effet" @change="(e) => { competence.effet = e.target.value }" />
+          <InputComponent type="number" title="Valeur de la nouvelle competence" :value="competence.valeur" @change="(e) => { competence.valeur = e.target.value }" />
           <div class="flex gap-5 justify-center mt-6">
             <label class="btn btn-outline btn-primary" for="side-drawer" @click="createCompetences(competence)">Créer</label>
             <label class="btn btn-active" for="side-drawer">Annuler</label>
@@ -96,7 +96,7 @@
           <InputComponent type="text" title="Effet" :value="competence.effet" :disabled="true" />
           <InputComponent type="number" title="Valeur" :value="competence.valeur" :disabled="true" />
           <div class="flex gap-5 justify-center mt-6">
-            <label class="btn btn-active" for="side-drawer">Femer</label>
+            <label class="btn btn-active" for="side-drawer">Fermer</label>
           </div>
         </div>
       </div>
