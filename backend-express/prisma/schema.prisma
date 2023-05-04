@@ -37,9 +37,9 @@ model Competence {
 
 model CartesCapacictesActive {
   competence_id Int
-  competence    Competence @relation(fields: [competence_id], references: [id])
+  competence    Competence @relation(fields: [competence_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   carte_id      Int
-  carte         Carte      @relation(fields: [carte_id], references: [id])
+  carte         Carte      @relation(fields: [carte_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cout_mana     Int
 
   @@id([competence_id, carte_id])
@@ -57,9 +57,9 @@ model Condition {
   nom         String
   description String
   type_id     Int
-  type        Type   @relation(fields: [type_id], references: [id])
+  type        Type   @relation(fields: [type_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   classe_id   Int
-  classe      Classe @relation(fields: [classe_id], references: [id])
+  classe      Classe @relation(fields: [classe_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Carte {
@@ -68,10 +68,10 @@ model Carte {
   illustration          String
   puissance             Int
   type_id               Int
-  type                  Type                     @relation(fields: [type_id], references: [id])
+  type                  Type                     @relation(fields: [type_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   classe_id             Int
-  classe                Classe                   @relation(fields: [classe_id], references: [id])
+  classe                Classe                   @relation(fields: [classe_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   competences_active    CartesCapacictesActive[]
   competence_passive_id Int
-  competence_passive    CapacitePassive          @relation(fields: [competence_passive_id], references: [id])
+  competence_passive    CapacitePassive          @relation(fields: [competence_passive_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

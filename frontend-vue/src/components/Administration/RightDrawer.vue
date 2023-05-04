@@ -8,7 +8,7 @@
     </div>
     <div class="drawer-side">
       <label for="side-drawer" class="drawer-overlay"></label>
-      <ul class="menu p-4 w-1/2 bg-base-100 text-base-content shadow">
+      <ul class="menu p-4 w-full bg-base-100 text-base-content shadow">
         <slot name="drawer-content">
 
         </slot>

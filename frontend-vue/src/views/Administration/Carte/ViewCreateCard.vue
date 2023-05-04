@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import InputComponent from "@/components/Administration/InputComponent.vue";
+import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import CardComponent from "@/components/Administration/CardComponent.vue";
 
 export default {

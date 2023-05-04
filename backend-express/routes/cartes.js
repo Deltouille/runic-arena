@@ -18,6 +18,8 @@ router.get('/', async function(req, res, next) {
                     competence: true
                 }
             },
+            type: true,
+            classe: true,
         }
     });
     res.send(cartes);
@@ -33,7 +35,13 @@ router.get('/:id', async function(req, res){
                     competence: true
                 }
             },
-            competence_passive: true,
+            competence_passive: {
+                include: {
+                    competence: true
+                }
+            },
+            type: true,
+            classe: true,
         }
     });
 
@@ -50,6 +58,7 @@ router.delete('/:id', async function(req, res) {
 
         res.status(200).json({ message: `La carte avec l'ID ${req.params.id} a été supprimé.` });
     } catch (err) {
+        console.log(err);
         res.status(400).json({ message: err.message });
     }
 });
@@ -62,7 +71,8 @@ router.post('/', async function(req, res){
             competence: {
                 connect: {
                     id: parseInt(req.body.comp1)
-                }
+                },
+                cout_mana: parseInt(req.body.comp1_cout_mana)
             }
         }
 
@@ -74,7 +84,8 @@ router.post('/', async function(req, res){
             competence: {
                 connect: {
                     id: parseInt(req.body.comp2)
-                }
+                },
+                cout_mana: parseInt(req.body.comp2_cout_mana)
             }
         }
 
@@ -86,15 +97,23 @@ router.post('/', async function(req, res){
         data: {
             nom: req.body.nom,
             illustration: req.body.illustration,
-            puissance: req.body.puissance,
-            type_id: req.body.type,
-            classe: req.body.classe,
+            puissance: parseInt(req.body.puissance),
+            type: {
+                connect: {
+                    id: parseInt(req.body.type_id)
+                }
+            },
+            classe: {
+                connect: {
+                    id: parseInt(req.body.classe_id)
+                }
+            },
             competences_active: {
                 create: competences_actives
             },
             competence_passive: {
                 connect: {
-                    id: req.body.competence_passive
+                    id: parseInt(req.body.competence_passive_id)
                 }
             }
 
@@ -112,7 +131,8 @@ router.put('/', async function(req, res){
             competence: {
                 connect: {
                     id: parseInt(req.body.comp1)
-                }
+                },
+                cout_mana: parseInt(req.body.comp1_cout_mana)
             }
         }
 
@@ -124,7 +144,8 @@ router.put('/', async function(req, res){
             competence: {
                 connect: {
                     id: parseInt(req.body.comp2)
-                }
+                },
+                cout_mana: parseInt(req.body.comp2_cout_mana)
             }
         }
 

@@ -84,7 +84,7 @@
         <div class="w-4/5 mx-auto">
           <div class="liste-conditions mb-10">
             <div class="flex flex-col mb-2">
-              <h1 class="text-2xl text-gray-700 text-left">Liste des compétences liées a cette classe</h1>
+              <h1 class="text-2xl text-gray-700 text-left">Compétences liées a la classe</h1>
               <TableComponent>
                 <template v-slot:thead>
                   <th scope="col" class="text-left">#</th>
@@ -101,9 +101,10 @@
               </TableComponent>
             </div>
           </div>
+          <div class="divider"></div>
           <div class="liste-cartes">
             <div class="flex flex-col mb-2">
-              <h1 class="text-2xl text-gray-700 text-left">Liste des compétences liées a cette classe</h1>
+              <h1 class="text-2xl text-gray-700 text-left">Cartes liées a la classe</h1>
               <TableComponent>
                 <template v-slot:thead>
                   <th scope="col" class="text-left">#</th>
@@ -118,7 +119,6 @@
               </TableComponent>
             </div>
           </div>
-
           <label class="btn btn-active" for="side-drawer">Fermer</label>
         </div>
       </div>
@@ -129,7 +129,7 @@
 <script>
 import TableComponent from "@/components/Administration/Table/TableComponent.vue";
 import RightDrawer from "@/components/Administration/RightDrawer.vue";
-import InputComponent from "@/components/Administration/InputComponent.vue";
+import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import ModalComponent from "@/components/ModalComponent.vue";
 
 export default {
