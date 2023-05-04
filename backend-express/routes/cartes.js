@@ -72,8 +72,8 @@ router.post('/', async function(req, res){
                 connect: {
                     id: parseInt(req.body.comp1)
                 },
-                cout_mana: parseInt(req.body.comp1_cout_mana)
-            }
+            },
+            cout_mana: parseInt(req.body.comp1_cout_mana)
         }
 
         competences_actives.push(competence1);
@@ -85,8 +85,8 @@ router.post('/', async function(req, res){
                 connect: {
                     id: parseInt(req.body.comp2)
                 },
-                cout_mana: parseInt(req.body.comp2_cout_mana)
-            }
+            },
+            cout_mana: parseInt(req.body.comp2_cout_mana)
         }
 
         competences_actives.push(competence2);
