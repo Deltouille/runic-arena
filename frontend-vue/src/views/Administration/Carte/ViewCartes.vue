@@ -78,52 +78,57 @@
       <div v-if="typeAction === 'create'">
         <h1 class="font-bold text-xl uppercase mb-6">Création d'une carte</h1>
         <div class="w-4/5 mx-auto">
-          <InputComponent type="text" title="Nom de la nouvelle carte" @change="(e) => { carte.nom = e.target.value }" />
-          <FileInputComponent title="Illustration de la nouvelle carte" @change="(e) => { carte.illustration = e.target.value }"/>
-          <InputComponent type="number" title="Puissance de la nouvelle carte" @change="(e) => { carte.puissance = e.target.value }" />
-          <SelectComponent title="Type de la nouvelle carte" @change="(e) => { carte.type_id = e.target.value }">
-            <template #select-options>
-              <option value="" selected>Selectionnez un type pour cette carte</option>
-              <option v-for="type in listeTypes" :key="type.id" :value="type.id">{{ type.nom }}</option>
-            </template>
-          </SelectComponent>
-          <SelectComponent title="Classe de la nouvelle carte" @change="(e) => { carte.classe_id = e.target.value }">
-            <template #select-options>
-              <option value="" selected>Selectionnez un type pour cette carte</option>
-              <option v-for="classe in listeClasses" :key="classe.id" :value="classe.id">{{ classe.nom }}</option>
-            </template>
-          </SelectComponent>
-          <h2 class="pt-5 text-left text-xl font-bold">Compétences actives</h2>
-          <div class="flex flex-row w-full gap-5">
-            <SelectComponent class="w-2/3" title="Première compétence active" @change="(e) => { carte.comp1 = e.target.value }">
+
+          <form @submit.prevent="createCarte(carte)" enctype="multipart/form-data">
+            <InputComponent type="text" title="Nom de la nouvelle carte" @change="(e) => { carte.nom = e.target.value }" />
+            <FileInputComponent title="Illustration de la nouvelle carte" @change="(e) => { carte.illustration = e.target.files[0] }"/>
+            <InputComponent type="number" title="Puissance de la nouvelle carte" @change="(e) => { carte.puissance = e.target.value }" />
+            <SelectComponent title="Type de la nouvelle carte" @change="(e) => { carte.type_id = e.target.value }">
               <template #select-options>
-                <option value="" selected>Selectionnez une première compétence active</option>
+                <option value="" selected>Selectionnez un type pour cette carte</option>
+                <option v-for="type in listeTypes" :key="type.id" :value="type.id">{{ type.nom }}</option>
+              </template>
+            </SelectComponent>
+            <SelectComponent title="Classe de la nouvelle carte" @change="(e) => { carte.classe_id = e.target.value }">
+              <template #select-options>
+                <option value="" selected>Selectionnez un type pour cette carte</option>
+                <option v-for="classe in listeClasses" :key="classe.id" :value="classe.id">{{ classe.nom }}</option>
+              </template>
+            </SelectComponent>
+            <h2 class="pt-5 text-left text-xl font-bold">Compétences actives</h2>
+            <div class="flex flex-row w-full gap-5">
+              <SelectComponent class="w-2/3" title="Première compétence active" @change="(e) => { carte.comp1 = e.target.value }">
+                <template #select-options>
+                  <option value="" selected>Selectionnez une première compétence active</option>
+                  <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
+                </template>
+              </SelectComponent>
+              <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp1_cout_mana = e.target.value }"/>
+            </div>
+
+            <div class="flex flex-row w-full gap-5">
+              <SelectComponent class="w-2/3" title="Deuxième compétence active" @change="(e) => { carte.comp2 = e.target.value }">
+                <template #select-options>
+                  <option value="" selected>Selectionnez une seconde compétence active</option>
+                  <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
+                </template>
+              </SelectComponent>
+              <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp2_cout_mana = e.target.value }"/>
+            </div>
+
+            <h2 class="pt-5 text-left text-xl font-bold">Compétences passive</h2>
+            <SelectComponent title="Compétence passive" @change="(e) => { carte.competence_passive_id = e.target.value }">
+              <template #select-options>
+                <option value="" selected>Selectionnez une compétence passive</option>
                 <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
               </template>
             </SelectComponent>
-            <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp1_cout_mana = e.target.value }"/>
-          </div>
-
-          <div class="flex flex-row w-full gap-5">
-            <SelectComponent class="w-2/3" title="Deuxième compétence active" @change="(e) => { carte.comp2 = e.target.value }">
-              <template #select-options>
-                <option value="" selected>Selectionnez une seconde compétence active</option>
-                <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
-              </template>
-            </SelectComponent>
-            <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp2_cout_mana = e.target.value }"/>
-          </div>
-
-          <h2 class="pt-5 text-left text-xl font-bold">Compétences passive</h2>
-          <SelectComponent title="Compétence passive" @change="(e) => { carte.competence_passive_id = e.target.value }">
-            <template #select-options>
-              <option value="" selected>Selectionnez une compétence passive</option>
-              <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
-            </template>
-          </SelectComponent>
+          </form>
 
           <div class="flex gap-5 justify-center mt-6">
-            <label class="btn btn-outline btn-primary" for="side-drawer" @click="createCarte(carte)">Créer</label>
+            <label for="side-drawer">
+              <button class="btn btn-outline btn-primary" type="submit" @click="createCarte(carte)">Créer</button>
+            </label>
             <label class="btn btn-active" for="side-drawer">Annuler</label>
           </div>
         </div>
@@ -138,6 +143,7 @@
 </template>
 
 <script>
+document.querySelectorAll('input').forEach(e => e.reportValidity())
 //import CardComponent from "@/components/Administration/CardComponent.vue";
 import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import TableComponent from "@/components/Administration/Table/TableComponent.vue";
@@ -237,14 +243,25 @@ export default {
     },
 
     async createCarte(carte) {
+      const formData = new FormData();
+      formData.append('nom', carte.nom);
+      formData.append('illustration', carte.illustration);
+      formData.append('puissance', carte.puissance);
+      formData.append('type_id', carte.type_id);
+      formData.append('classe_id', carte.classe_id);
+      formData.append('comp1', carte.comp1);
+      formData.append('comp1_cout_mana', carte.comp1_cout_mana);
+      formData.append('comp2', carte.comp2);
+      formData.append('comp2_cout_mana', carte.comp2_cout_mana);
+      formData.append('competence_passive_id', carte.competence_passive_id);
+
       try {
         const response = await fetch(`http://localhost:3000/cards`, {
           method: "POST",
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(carte)
+          body: formData
         });
         console.log(response);
       }catch (e){
@@ -266,6 +283,10 @@ export default {
         console.log(e)
       }
       await this.resetData();
+    },
+
+    async updateCard(){
+
     },
 
     async closeRightDrawerOrModal(){

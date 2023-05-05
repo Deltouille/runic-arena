@@ -1,7 +1,7 @@
 <template>
   <div class="form-control">
     <label class="label">{{ title }}</label>
-    <input type="file" class="file-input file-input-bordered file-input-primary w-full" @change="$emit('update', $event.target.value)" :value="value" :disabled="disabled"/>
+    <input type="file" name="illustration" class="file-input file-input-bordered file-input-primary w-full" @change="$emit('update', $event.target.value)" :value="value" :disabled="disabled"/>
   </div>
 </template>
 

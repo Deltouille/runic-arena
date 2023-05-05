@@ -2,11 +2,26 @@
 
 var express = require('express');
 var router = express.Router();
+var path = require('path')
+var multer = require('multer');
+
+//Sert a ajouter la bonne extension au fichier uploadé
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+    }
+})
+
+var upload = multer({ storage: storage});
+
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
 router.get('/', async function(req, res, next) {
-    const cartes = await prisma.carte.findMany({
+    let cartes = await prisma.carte.findMany({
         include: {
             competences_active: {
                 include: {
@@ -22,6 +37,13 @@ router.get('/', async function(req, res, next) {
             classe: true,
         }
     });
+
+    const url = getHostUrl(req);
+
+    cartes.map((current_carte) => {
+        current_carte.illustration = url + 'images/' + current_carte.illustration;
+    });
+
     res.send(cartes);
 });
 
@@ -59,11 +81,11 @@ router.delete('/:id', async function(req, res) {
         res.status(200).json({ message: `La carte avec l'ID ${req.params.id} a été supprimé.` });
     } catch (err) {
         console.log(err);
-        res.status(400).json({ message: err.message });
+        res.status(500).json({ message: err.message });
     }
 });
 
-router.post('/', async function(req, res){
+router.post('/', upload.single("illustration"), async function(req, res){
     const competences_actives = [];
 
     if(req.body.comp1){
@@ -90,13 +112,13 @@ router.post('/', async function(req, res){
         }
 
         competences_actives.push(competence2);
-    }
 
+    }
 
     const carte = await prisma.carte.create({
         data: {
             nom: req.body.nom,
-            illustration: req.body.illustration,
+            illustration: req.file.filename,
             puissance: parseInt(req.body.puissance),
             type: {
                 connect: {
@@ -111,14 +133,15 @@ router.post('/', async function(req, res){
             competences_active: {
                 create: competences_actives
             },
+
             competence_passive: {
                 connect: {
                     id: parseInt(req.body.competence_passive_id)
                 }
             }
-
         }
     });
+
 
     res.status(200).json({ message: 'Carte bien créer.'})
 });
@@ -176,5 +199,19 @@ router.put('/', async function(req, res){
 
     res.status(200).json({ message: 'Auteur bien modifié.'})
 });
+
+function getHostUrl(req) {
+    const protocol = req.protocol;
+    const host = req.get('host');
+
+    let port = '';
+    if (host.includes(':')) {
+        port = ':' + host.split(':')[1];
+    }
+
+    const url = `${protocol}://${host}/`;
+
+    return url;
+}
 
 module.exports = router;

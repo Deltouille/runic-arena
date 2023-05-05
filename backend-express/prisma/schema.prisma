@@ -36,19 +36,18 @@ model Competence {
 }
 
 model CartesCapacictesActive {
+  id          Int    @id @default(autoincrement())
   competence_id Int
   competence    Competence @relation(fields: [competence_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   carte_id      Int
   carte         Carte      @relation(fields: [carte_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cout_mana     Int
-
-  @@id([competence_id, carte_id])
 }
 
 model CapacitePassive {
   id            Int        @id @default(autoincrement())
   competence_id Int
-  competence    Competence @relation(fields: [competence_id], references: [id])
+  competence    Competence @relation(fields: [competence_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   carte         Carte[]
 }
 

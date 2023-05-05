@@ -62,7 +62,13 @@
         <div class="w-4/5 mx-auto">
           <InputComponent type="text" title="Modification du nom" :value="competence.nom" @change="(e) => { competence.nom = e.target.value }"/>
           <InputComponent type="textarea" title="Modification de la description" :value="competence.description" @change="(e) => { competence.description = e.target.value }"/>
-          <InputComponent type="text" title="Modification du type" :value="competence.type" @change="(e) => { competence.type = e.target.value }"/>
+          <SelectComponent title="Modification du type" :value="competence.type" @change="(e) => { competence.type = e.target.value }">
+            <template #select-options>
+              <option value="Buff">Buff</option>
+              <option value="Debuff">Debuff</option>
+              <option value="Dommage">Dommage</option>
+            </template>
+          </SelectComponent>
           <InputComponent type="text" title="Modification de l'effet" :value="competence.effet" @change="(e) => { competence.effet = e.target.value }"/>
           <InputComponent type="number" title="Modification de la valeur" :value="competence.valeur" @change="(e) => { competence.valeur = e.target.value }"/>
           <div class="flex gap-5 justify-center mt-6">
@@ -77,8 +83,33 @@
         <div class="w-4/5 mx-auto">
           <InputComponent type="text" title="Nom de la nouvelle competence" :value="competence.nom" @change="(e) => { competence.nom = e.target.value }" />
           <InputComponent type="textarea" title="Description de la nouvelle competence" :value="competence.description" @change="(e) => { competence.description = e.target.value }" />
-          <InputComponent type="text" title="Type de la nouvelle competence" :value="competence.type" @change="(e) => { competence.type = e.target.value }"/>
-          <InputComponent type="text" title="Effet de la nouvelle competence" :value="competence.effet" @change="(e) => { competence.effet = e.target.value }" />
+          <SelectComponent title="Type de la nouvelle competence" :value="competence.type" @change="(e) => { competence.type = e.target.value }">
+            <template #select-options>
+              <option value="Buff">Buff</option>
+              <option value="Debuff">Debuff</option>
+              <option value="Dommage">Dommage</option>
+            </template>
+          </SelectComponent>
+          <SelectComponent title="Effet de la nouvelle competence" :value="competence.effet" @change="(e) => { competence.effet = e.target.value }" >
+            <!-- TODO: Faire une table dans la base de données, style "TypeCompetence", avec "Type" et "Effet" et Créer un select avec -->
+            <template #select-options>
+
+                <option v-if="competence.type === 'Buff'" value="Esquive">Esquive</option>
+                <option v-if="competence.type === 'Buff'" value="Protection">Protection</option>
+                <option v-if="competence.type === 'Buff'" value="Critique">Critique</option>
+                <option v-if="competence.type === 'Buff'" value="Rage">Rage</option>
+
+                <option v-if="competence.type === 'Debuff'" value="Malédiction">Malédiction</option>
+                <option v-if="competence.type === 'Debuff'" value="Epuisement">Epuisement</option>
+                <option v-if="competence.type === 'Debuff'" value="Folie">Folie</option>
+                <option v-if="competence.type === 'Debuff'" value="Capitulation">Capitulation</option>
+
+                <option v-if="competence.type === 'Dommage'" value="Contre attaque">Contre attaque</option>
+                <option v-if="competence.type === 'Dommage'" value="Vol de vie">Vol de vie</option>
+                <option v-if="competence.type === 'Dommage'" value="Critique">Frappe directe</option>
+
+            </template>
+          </SelectComponent>
           <InputComponent type="number" title="Valeur de la nouvelle competence" :value="competence.valeur" @change="(e) => { competence.valeur = e.target.value }" />
           <div class="flex gap-5 justify-center mt-6">
             <label class="btn btn-outline btn-primary" for="side-drawer" @click="createCompetences(competence)">Créer</label>
@@ -109,6 +140,7 @@ import TableComponent from "@/components/Administration/Table/TableComponent.vue
 import RightDrawer from "@/components/Administration/RightDrawer.vue";
 import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import ModalComponent from "@/components/ModalComponent.vue";
+import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
 
 export default {
   name: "ViewClasses",
@@ -122,6 +154,7 @@ export default {
   },
 
   components: {
+    SelectComponent,
     ModalComponent,
     InputComponent,
     RightDrawer,
