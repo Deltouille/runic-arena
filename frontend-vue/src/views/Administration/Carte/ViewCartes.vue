@@ -202,6 +202,7 @@ export default {
         this.listeTypes = await this.getTypes();
         this.listeClasses = await this.getClasses();
         this.listeCompetences = await this.getCompetences();
+        this.listeConditions = await this.getConditions();
       } catch (e) {
         console.log(e)
       }
@@ -228,6 +229,15 @@ export default {
     async getCompetences() {
       try {
         const response = await fetch("http://localhost:3000/competences");
+        return await response.json();
+      } catch (e) {
+        console.log(e)
+      }
+    },
+
+    async getConditions() {
+      try {
+        const response = await fetch("http://localhost:3000/conditions");
         return await response.json();
       } catch (e) {
         console.log(e)
