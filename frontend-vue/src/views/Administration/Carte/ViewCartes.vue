@@ -147,7 +147,7 @@ document.querySelectorAll('input').forEach(e => e.reportValidity())
 //import CardComponent from "@/components/Administration/CardComponent.vue";
 import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import TableComponent from "@/components/Administration/Table/TableComponent.vue";
-import ModalComponent from "@/components/ModalComponent.vue";
+import ModalComponent from "@/components/Administration/ModalComponent.vue";
 import RightDrawer from "@/components/Administration/RightDrawer.vue";
 import FileInputComponent from "@/components/Administration/Input/FileInputComponent.vue";
 import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
@@ -161,6 +161,7 @@ export default {
       listeTypes: [],
       listeCompetences: [],
       listeClasses: [],
+      listeConditions: [],
     }
   },
   components: {
@@ -195,6 +196,7 @@ export default {
       try {
         const response = await fetch("http://localhost:3000/cards");
         const data = await response.json();
+
         this.listeCartes = data;
 
         this.listeTypes = await this.getTypes();

@@ -139,7 +139,7 @@
 import TableComponent from "@/components/Administration/Table/TableComponent.vue";
 import RightDrawer from "@/components/Administration/RightDrawer.vue";
 import InputComponent from "@/components/Administration/Input/InputComponent.vue";
-import ModalComponent from "@/components/ModalComponent.vue";
+import ModalComponent from "@/components/Administration/ModalComponent.vue";
 import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
 
 export default {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import NavigationBar from "@/components/Navigation.vue";
+  import NavigationBar from "@/components/Administration/Navigation.vue";
 
   export default {
     components: {

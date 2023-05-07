@@ -1,51 +1,28 @@
 <template>
-  <div class="background h-screen flex items-center">
-    <div class="grid grid-cols-2 m-auto gap-5">
-      <router-link to="/" class="max-w-xl rounded overflow-hidden shadow-lg bg-gray-900">
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2 text-white">Lorem Ipsum</div>
-          <p class="text-base text-white">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-          </p>
+  <div id="home">
+    <div class="hero min-h-screen background">
+      <div class="hero-overlay bg-opacity-60"></div>
+      <div class="hero-content text-center text-neutral-content">
+        <div class="max-w-md">
+          <h1 class="mb-5 text-5xl font-bold">Runic Arena</h1>
+          <p class="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+          <button class="btn btn-primary">Get Started</button>
         </div>
-      </router-link>
-
-      <router-link to="/" class="max-w-xl rounded overflow-hidden shadow-lg bg-gray-900">
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2 text-white">Lorem Ipsum</div>
-          <p class="text-base text-white">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-          </p>
-        </div>
-      </router-link>
-
-      <router-link to="/" class="max-w-xl rounded overflow-hidden shadow-lg bg-gray-900">
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2 text-white">Lorem Ipsum</div>
-          <p class="text-base text-white">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-          </p>
-        </div>
-      </router-link>
-
-      <router-link to="/" class="max-w-xl rounded overflow-hidden shadow-lg bg-gray-900">
-        <div class="px-6 py-4">
-          <div class="font-bold text-xl mb-2 text-white">Lorem Ipsum</div>
-          <p class="text-base text-white">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-          </p>
-        </div>
-      </router-link>
+      </div>
     </div>
-  </div>
-  <div class="bg-gray-950 pt-5">
-    <h1 class="text-4xl font-bold text-orange-500">Runic Arena</h1>
+    <NavigationComponent/>
+    <div class="min-h-screen bg-gray-900">
+
+    </div>
   </div>
 </template>
 
 <script>
+import NavigationComponent from "@/components/Accueil/NavigationComponent.vue";
+
 export default {
-  name: "ViewHome"
+  name: "ViewHome",
+  components: {NavigationComponent}
 }
 </script>
 
