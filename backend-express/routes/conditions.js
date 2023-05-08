@@ -15,7 +15,6 @@ router.get('/:id', async function(req, res){
             id: parseInt(req.params.id)
         }
     });
-
     res.send(condition);
 });
 

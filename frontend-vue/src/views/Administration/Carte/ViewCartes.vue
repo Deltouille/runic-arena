@@ -12,7 +12,8 @@
       <div class="w-5/6 mx-auto p-6">
         <h1 class="text-3xl mb-10 font-bold text-gray-900 text-left">Cartes</h1>
         <div class="liste-types">
-          <div class="flex justify-end mb-2">
+          <div class="flex justify-between mb-2">
+            <h1 class="text-2xl text-gray-700 text-left">Liste des cartes</h1>
             <label class="border-green-600 border-2 text-green-500 hover:text-white hover:bg-green-600 shadow hover:scale-105 duration-200 rounded-full p-1 cursor-pointer" for="side-drawer" @click="openRightDrawer('create', null)">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -117,12 +118,24 @@
             </div>
 
             <h2 class="pt-5 text-left text-xl font-bold">Compétences passive</h2>
-            <SelectComponent title="Compétence passive" @change="(e) => { carte.competence_passive_id = e.target.value }">
+            <SelectComponent title="" @change="(e) => { carte.competence_passive_id = e.target.value }">
               <template #select-options>
                 <option value="" selected>Selectionnez une compétence passive</option>
                 <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
               </template>
             </SelectComponent>
+
+            <h2 class="pt-5 text-left text-xl font-bold">Condition</h2>
+            <SelectComponent @change="(e) => { condition = e.target.value }">
+              <template #select-options>
+                <option value="" selected>Selectionnez une compétence passive</option>
+                <option v-for="condition in listeConditions" :key="condition.id" :value="condition.id">{{ condition.nom }} - {{ condition.description }}</option>
+              </template>
+            </SelectComponent>
+            <!--p v-if="condition.length !== 0">{{ condition.description }}</p-->
+            <div class="text-left pt-4">
+              <label class="btn btn-primary" for="modal" @click="openModal(carte)">Créer une nouvelle condition</label>
+            </div>
           </form>
 
           <div class="flex gap-5 justify-center mt-6">
@@ -162,6 +175,7 @@ export default {
       listeCompetences: [],
       listeClasses: [],
       listeConditions: [],
+      condition: null,
     }
   },
   components: {
