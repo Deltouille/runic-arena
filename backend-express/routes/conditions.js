@@ -34,26 +34,17 @@ router.delete('/:id', async function(req, res){
 });
 
 router.post('/', async function(req, res){
+    console.log(req.body);
     try {
         const condition = await prisma.condition.create({
             data: {
                 nom: req.body.nom,
                 description: req.body.description,
                 effet: req.body.effet,
-                type: {
-                    connect: {
-                        id: parseInt(req.body.type_id)
-                    }
-                },
-                classe: {
-                    connect: {
-                        id: parseInt(req.body.classe_id)
-                    }
-                },
-
             }
         })
     }catch (err){
+        console.log(err);
         res.status(500).json({ message: err.message });
     }
 });

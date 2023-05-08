@@ -61,6 +61,24 @@
       </div>
     </template>
     <template v-slot:drawer-content>
+      <ModalConditionComponent>
+        <InputComponent type="text" title="Nom de la condition" @change="(e) => { condition.nom = e.target.value }" />
+        <TextareaComponent title="Description de la condition" @change="(e) => { condition.description = e.target.value }"/>
+        <SelectComponent title="Type de la condition" @change="(e) => { condition.effet = e.target.value }">
+          <template #select-options>
+            <option value="" selected>Selectionnez un type pour cette condition</option>
+            <option value="Attaque">Attaque</option>
+            <option value="Defend">Defend</option>
+            <option value="Avantage">Avantage</option>
+            <option value="Groupe">Groupe</option>
+          </template>
+        </SelectComponent>
+        <div class="modal-action">
+          <label for="modal-condition" class="btn btn-outline btn-primary" @click="addCondition(condition)">Ajouter</label>
+          <label for="modal-condition" class="btn">Annuler</label>
+        </div>
+      </ModalConditionComponent>
+
       <div v-if="typeAction === 'update'">
         <h1 class="font-bold text-xl uppercase mb-6">Modification : {{ carte.nom }}</h1>
         <div class="w-4/5 mx-auto">
@@ -134,7 +152,7 @@
             </SelectComponent>
             <!--p v-if="condition.length !== 0">{{ condition.description }}</p-->
             <div class="text-left pt-4">
-              <label class="btn btn-primary" for="modal" @click="openModal(carte)">Créer une nouvelle condition</label>
+              <label class="btn btn-primary" for="modal-condition" @click="openModal(carte)">Créer une nouvelle condition</label>
             </div>
           </form>
 
@@ -156,14 +174,17 @@
 </template>
 
 <script>
+import ModalConditionComponent from "@/components/Administration/Modals/ModalConditionComponent.vue";
+
 document.querySelectorAll('input').forEach(e => e.reportValidity())
 //import CardComponent from "@/components/Administration/CardComponent.vue";
 import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import TableComponent from "@/components/Administration/Table/TableComponent.vue";
-import ModalComponent from "@/components/Administration/ModalComponent.vue";
+import ModalComponent from "@/components/Administration/Modals/ModalDelComponent.vue";
 import RightDrawer from "@/components/Administration/RightDrawer.vue";
 import FileInputComponent from "@/components/Administration/Input/FileInputComponent.vue";
 import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
+import TextareaComponent from "@/components/Administration/Input/TextareaComponent.vue";
 export default {
   name: "ViewCartes",
   data() {
@@ -175,10 +196,12 @@ export default {
       listeCompetences: [],
       listeClasses: [],
       listeConditions: [],
-      condition: null,
+      condition: {},
     }
   },
   components: {
+    TextareaComponent,
+    ModalConditionComponent,
     SelectComponent,
     FileInputComponent,
     RightDrawer,
@@ -313,6 +336,22 @@ export default {
 
     async updateCard(){
 
+    },
+
+    async addCondition(condition){
+      try {
+        const response = await fetch(`http://localhost:3000/conditions`, {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(condition)
+        });
+        console.log(response);
+        this.listeConditions = await this.getConditions();
+      }catch (e){
+        console.log(e);
+      }
     },
 
     async closeRightDrawerOrModal(){
