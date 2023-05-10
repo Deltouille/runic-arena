@@ -1,6 +1,6 @@
 <template>
-  <article class="bg-red-500 p-2 rounded">
-  <div class="flex flex-col gap-4">
+  <article class="bg-red-500 p-2 rounded w-2/6 mx-auto">
+    <div class="flex flex-col gap-4">
       <div class="flex flex-row justify-between bg-white p-2 rounded">
         <h2 class="font-semibold">{{ data.nom }}</h2>
         <p class="tooltip" :data-tip="data.type.nom">{{ data.type.nom }}</p>
@@ -9,10 +9,10 @@
         <img :src="data.illustration" class="h-44 w-full rounded">
       </div>
       <div class="bg-white text-left p-2 rounded">
-        <h2 class="font-semibold">Compétences actives</h2>
-        <div v-for="competence_active in data.competences_active" :key="competence_active.id" tabindex="0" class="collapse rounded-box w-full">
-          <div class="collapse-title text-md font-medium text-left flex justify-between">
-            <p>{{ competence_active.competence.nom }}</p>
+        <h2 class="font-semibold text-lg">Compétences actives</h2>
+        <div v-for="competence_active in data.competences_active" :key="competence_active.id" tabindex="0" class="rounded-box w-full mb-2">
+          <div class="text-md font-medium text-left flex justify-between">
+            <p class="font-semibold">{{ competence_active.competence.nom }}</p>
             <p class="flex gap-2">
               {{ competence_active.cout_mana }}
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -21,13 +21,14 @@
               </svg>
             </p>
           </div>
-          <div class="collapse-content text-left">
-            <div class="flex flex-col">
-              <p>{{ competence_active.competence.description }}</p>
-              <p>Cout : {{ competence_active.cout_mana }}</p>
-            </div>
-          </div>
+          <p class="text-italic">{{ competence_active.competence.description }}</p>
         </div>
+
+        <h2 class="font-semibold text-lg">Compétences passives</h2>
+        <p class="font-semibold">{{ data.competence_passive.competence.nom }}</p>
+        <p class="text-italic">{{ data.competence_passive.competence.description }}</p>
+        <p>condition</p>
+        <!--p class="text-italic">{{ data.competence_passive.condition.description }}</p-->
       </div>
     </div>
   </article>

@@ -49,6 +49,7 @@ router.post('/', async function(req, res){
     }
 });
 
+
 router.put('/', async function(req, res){
     try {
         const condition = await prisma.condition.update({

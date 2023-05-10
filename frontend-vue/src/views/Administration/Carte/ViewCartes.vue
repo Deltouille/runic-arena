@@ -166,8 +166,11 @@
       </div>
 
       <div v-if="typeAction === 'read'">
-        <h1 class="font-bold text-xl uppercase mb-6">Informations de la carte</h1>
-
+        <h1 class="font-bold text-xl uppercase mb-6 p-4">Informations de la carte</h1>
+        <CardComponent :data="carte"/>
+        <div class="flex gap-5 justify-center mt-6">
+          <label class="btn btn-active" for="side-drawer">Annuler</label>
+        </div>
       </div>
     </template>
   </RightDrawer>
@@ -185,6 +188,7 @@ import RightDrawer from "@/components/Administration/RightDrawer.vue";
 import FileInputComponent from "@/components/Administration/Input/FileInputComponent.vue";
 import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
 import TextareaComponent from "@/components/Administration/Input/TextareaComponent.vue";
+import CardComponent from "@/components/Administration/CardComponent.vue";
 export default {
   name: "ViewCartes",
   data() {
@@ -200,6 +204,7 @@ export default {
     }
   },
   components: {
+    CardComponent,
     TextareaComponent,
     ModalConditionComponent,
     SelectComponent,
@@ -339,11 +344,13 @@ export default {
     },
 
     async addCondition(condition){
+      console.log(condition)
       try {
         const response = await fetch(`http://localhost:3000/conditions`, {
           method: "POST",
           headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(condition)
         });
@@ -352,6 +359,13 @@ export default {
       }catch (e){
         console.log(e);
       }
+    },
+
+    async resetData(){
+      this.typeAction = null;
+      this.carte = {};
+      this.condition = {};
+      await this.getAllCartes();
     },
 
     async closeRightDrawerOrModal(){

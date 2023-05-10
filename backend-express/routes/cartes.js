@@ -59,7 +59,8 @@ router.get('/:id', async function(req, res){
             },
             competence_passive: {
                 include: {
-                    competence: true
+                    competence: true,
+                    condition: true
                 }
             },
             type: true,
@@ -67,6 +68,7 @@ router.get('/:id', async function(req, res){
         }
     });
 
+    console.log(carte);
     res.send(carte);
 });
 
