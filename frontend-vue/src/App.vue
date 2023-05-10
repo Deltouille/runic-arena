@@ -1,19 +1,10 @@
 <template>
-  <!--<NavigationBar/>-->
   <router-view></router-view>
-  <!--FooterComponent/-->
 </template>
 
 <script>
-//import NavigationBar from "@/components/NavigationComponent.vue";
-//import FooterComponent from "@/components/GlobalComponents/FooterComponent.vue";
-
 export default {
   name: 'App',
-  components: {
-    //FooterComponent
-    //NavigationBar
-  }
 }
 </script>
 

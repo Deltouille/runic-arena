@@ -21,16 +21,16 @@
     <h1 class="font-bold text-xl uppercase mb-6">Création d'une carte</h1>
     <div class="w-4/5 mx-auto">
       <form @submit.prevent="createCarte(carte)" enctype="multipart/form-data">
-        <InputComponent type="text" title="Nom de la nouvelle carte" @change="(e) => { carte.nom = e.target.value }" />
-        <FileInputComponent title="Illustration de la nouvelle carte" @change="(e) => { carte.illustration = e.target.files[0] }"/>
+        <InputComponent type="text" title="Nom de la nouvelle carte" :value="data.nom" @change="(e) => { carte.nom = e.target.value }" />
+        <FileInputComponent title="Illustration de la nouvelle carte" :value="data.illustration" @change="(e) => { carte.illustration = e.target.files[0] }"/>
         <InputComponent type="number" title="Puissance de la nouvelle carte" @change="(e) => { carte.puissance = e.target.value }" />
-        <SelectComponent title="Type de la nouvelle carte" @change="(e) => { carte.type_id = e.target.value }">
+        <SelectComponent title="Type de la nouvelle carte" :value="data.type_id" @change="(e) => { carte.type_id = e.target.value }">
           <template #select-options>
-            <option value="" selected>Selectionnez un type pour cette carte</option>
+            <option value="" selected disabled>Selectionnez un type pour cette carte</option>
             <option v-for="type in listeTypes" :key="type.id" :value="type.id">{{ type.nom }}</option>
           </template>
         </SelectComponent>
-        <SelectComponent title="Classe de la nouvelle carte" @change="(e) => { carte.classe_id = e.target.value }">
+        <SelectComponent title="Classe de la nouvelle carte" :value="data.classe_id" @change="(e) => { carte.classe_id = e.target.value }">
           <template #select-options>
             <option value="" selected>Selectionnez un type pour cette carte</option>
             <option v-for="classe in listeClasses" :key="classe.id" :value="classe.id">{{ classe.nom }}</option>
@@ -38,27 +38,27 @@
         </SelectComponent>
         <h2 class="pt-5 text-left text-xl font-bold">Compétences actives</h2>
         <div class="flex flex-row w-full gap-5">
-          <SelectComponent class="w-2/3" title="Première compétence active" @change="(e) => { carte.comp1 = e.target.value }">
+          <SelectComponent class="w-2/3" title="Première compétence active" :value="data.comp1" @change="(e) => { carte.comp1 = e.target.value }">
             <template #select-options>
               <option value="" selected>Selectionnez une première compétence active</option>
               <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
             </template>
           </SelectComponent>
-          <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp1_cout_mana = e.target.value }"/>
+          <InputComponent class="w-1/3" type="number" title="Cout mana" :value="data.comp1_cout_mana" @change="(e) => { carte.comp1_cout_mana = e.target.value }"/>
         </div>
 
         <div class="flex flex-row w-full gap-5">
-          <SelectComponent class="w-2/3" title="Deuxième compétence active" @change="(e) => { carte.comp2 = e.target.value }">
+          <SelectComponent class="w-2/3" title="Deuxième compétence active" :value="data.comp2" @change="(e) => { carte.comp2 = e.target.value }">
             <template #select-options>
               <option value="" selected>Selectionnez une seconde compétence active</option>
               <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
             </template>
           </SelectComponent>
-          <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp2_cout_mana = e.target.value }"/>
+          <InputComponent class="w-1/3" type="number" title="Cout mana" :value="data.comp2_cout_mana" @change="(e) => { carte.comp2_cout_mana = e.target.value }"/>
         </div>
 
         <h2 class="pt-5 text-left text-xl font-bold">Compétences passive</h2>
-        <SelectComponent title="" @change="(e) => { carte.competence_passive_id = e.target.value }">
+        <SelectComponent title="" :value="data.competence_passive_id" @change="(e) => { carte.competence_passive_id = e.target.value }">
           <template #select-options>
             <option value="" selected>Selectionnez une compétence passive</option>
             <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
@@ -66,7 +66,7 @@
         </SelectComponent>
 
         <h2 class="pt-5 text-left text-xl font-bold">Condition</h2>
-        <SelectComponent @change="(e) => { carte.condition_id = e.target.value }">
+        <SelectComponent :value="data.condition_id" @change="(e) => { carte.condition_id = e.target.value }">
           <template #select-options>
             <option value="" selected>Selectionnez une compétence passive</option>
             <option v-for="condition in listeConditions" :key="condition.id" :value="condition.id">{{ condition.nom }} - {{ condition.description }}</option>
@@ -80,7 +80,7 @@
 
       <div class="flex gap-5 justify-center mt-6">
         <label for="side-drawer">
-          <button class="btn btn-outline btn-primary" type="submit" @click="createCarte(carte)">Créer</button>
+          <button class="btn btn-outline btn-primary" type="submit" @click="updateCarte(carte)">Créer</button>
         </label>
         <label class="btn btn-active" for="side-drawer">Annuler</label>
       </div>
@@ -89,17 +89,16 @@
 </template>
 
 <script>
-import InputComponent from "@/components/Administration/Input/InputComponent.vue";
-import FileInputComponent from "@/components/Administration/Input/FileInputComponent.vue";
-import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
 import ModalConditionComponent from "@/components/Administration/Modals/ModalConditionComponent.vue";
+import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import TextareaComponent from "@/components/Administration/Input/TextareaComponent.vue";
+import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
+import FileInputComponent from "@/components/Administration/Input/FileInputComponent.vue";
 
 export default {
-  name: "ViewCreateCard",
-
-  components: {TextareaComponent, ModalConditionComponent, SelectComponent, FileInputComponent, InputComponent},
-
+  name: "ViewUpdateCard",
+  components: {FileInputComponent, SelectComponent, TextareaComponent, InputComponent, ModalConditionComponent},
+  props: ['data'],
   data(){
     return {
       carte: {},
@@ -188,11 +187,11 @@ export default {
     },
 
     /**
-     * Fonction qui permet de créer une carte
+     * Fonction qui permet de modifier une carte
      * @param carte
      * @returns {Promise<void>}
      */
-    async createCarte(carte) {
+    async updateCarte(carte) {
       const formData = new FormData();
       formData.append('nom', carte.nom);
       formData.append('illustration', carte.illustration);
@@ -228,11 +227,13 @@ export default {
   },
 
   async mounted() {
+    this.carte = this.data();
     await this.getTypes();
     await this.getClasses();
     await this.getCompetences();
     await this.getConditions();
   }
+
 }
 </script>
 

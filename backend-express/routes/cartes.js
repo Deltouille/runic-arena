@@ -68,7 +68,10 @@ router.get('/:id', async function(req, res){
         }
     });
 
-    console.log(carte);
+    const url = getHostUrl(req);
+
+    carte.illustration = url + 'images/' + carte.illustration;
+
     res.send(carte);
 });
 
@@ -137,8 +140,17 @@ router.post('/', upload.single("illustration"), async function(req, res){
             },
 
             competence_passive: {
-                connect: {
-                    id: parseInt(req.body.competence_passive_id)
+                create: {
+                    competence: {
+                        connect: {
+                            id: parseInt(req.body.competence_passive_id)
+                        },
+                    },
+                    condition: {
+                        connect: {
+                            id: parseInt(req.body.condition_id)
+                        }
+                    }
                 }
             }
         }

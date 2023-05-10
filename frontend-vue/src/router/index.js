@@ -6,7 +6,6 @@ import ViewClasses from "@/views/Administration/Classe/ViewClasses.vue";
 import ViewTypes from "@/views/Administration/Type/ViewTypes.vue";
 import ViewCompetence from "@/views/Administration/Competence/ViewCompetence.vue";
 import ViewCartes from "@/views/Administration/Carte/ViewCartes.vue";
-import ViewCreateCard from "@/views/Administration/Carte/ViewCreateCard.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -41,11 +40,6 @@ const router = createRouter({
                     name: 'cartes',
                     component: ViewCartes,
                 },
-                {
-                    path: 'addCarte',
-                    name: 'addCarte',
-                    component: ViewCreateCard
-                }
             ]
         },
         // ...

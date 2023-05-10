@@ -37,5 +37,4 @@ app.use('/types', typesRouter);
 app.use('/competences', competencesRouter);
 app.use('/conditions', conditionRouter);
 
-
 module.exports = app;

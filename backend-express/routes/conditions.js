@@ -8,7 +8,6 @@ router.get('/', async function(req, res){
     res.send(conditions);
 });
 
-
 router.get('/:id', async function(req, res){
     const condition = await prisma.condition.findUnique({
         where: {
@@ -34,7 +33,6 @@ router.delete('/:id', async function(req, res){
 });
 
 router.post('/', async function(req, res){
-    console.log(req.body);
     try {
         const condition = await prisma.condition.create({
             data: {
@@ -48,7 +46,6 @@ router.post('/', async function(req, res){
         res.status(500).json({ message: err.message });
     }
 });
-
 
 router.put('/', async function(req, res){
     try {

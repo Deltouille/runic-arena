@@ -1,6 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// PROJET D'ALEXANDRE PETIT
 generator client {
   provider = "prisma-client-js"
 }
@@ -45,24 +45,26 @@ model CartesCapacictesActive {
 }
 
 model CapacitePassive {
-  id            Int         @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   competence_id Int
-  competence    Competence  @relation(fields: [competence_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  competence    Competence @relation(fields: [competence_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   carte         Carte[]
-  condition     Condition[]
+  condition_id  Int
+  condition     Condition  @relation(fields: [condition_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Condition {
-  id                  Int              @id @default(autoincrement())
+  id                  Int               @id @default(autoincrement())
   nom                 String
   description         String
   effet               String
   type_id             Int?
-  type                Type?            @relation(fields: [type_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  type                Type?             @relation(fields: [type_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   classe_id           Int?
-  classe              Classe?          @relation(fields: [classe_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  classe              Classe?           @relation(fields: [classe_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   capacite_passive_id Int?
-  capacite_passive    CapacitePassive? @relation(fields: [capacite_passive_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  // capacite_passive    CapacitePassive? @relation(fields: [capacite_passive_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  capacite_passive    CapacitePassive[]
 }
 
 model Carte {

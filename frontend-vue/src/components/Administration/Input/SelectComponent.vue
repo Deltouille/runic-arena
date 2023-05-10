@@ -11,6 +11,16 @@
 export default {
   name: "SelectComponent",
   props: ['title', 'value', 'disabled'],
+  methods: {
+
+  },
+  data(){
+    return {
+
+    }
+  },
+  mounted() {
+  }
 }
 </script>
 

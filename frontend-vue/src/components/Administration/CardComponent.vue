@@ -1,12 +1,12 @@
 <template>
-  <article class="bg-red-500 p-2 rounded w-2/6 mx-auto">
+  <article class="artboard phone-1 md:phone-3 bg-black p-4 rounded mx-auto">
     <div class="flex flex-col gap-4">
       <div class="flex flex-row justify-between bg-white p-2 rounded">
         <h2 class="font-semibold">{{ data.nom }}</h2>
         <p class="tooltip" :data-tip="data.type.nom">{{ data.type.nom }}</p>
       </div>
-      <div class="h-44">
-        <img :src="data.illustration" class="h-44 w-full rounded">
+      <div class="h-80">
+        <img :src="data.illustration" class="h-full w-full rounded">
       </div>
       <div class="bg-white text-left p-2 rounded">
         <h2 class="font-semibold text-lg">Compétences actives</h2>
@@ -21,13 +21,16 @@
               </svg>
             </p>
           </div>
-          <p class="text-italic">{{ competence_active.competence.description }}</p>
+          <p class="italic">{{ competence_active.competence.description }}</p>
         </div>
 
         <h2 class="font-semibold text-lg">Compétences passives</h2>
         <p class="font-semibold">{{ data.competence_passive.competence.nom }}</p>
-        <p class="text-italic">{{ data.competence_passive.competence.description }}</p>
-        <p>condition</p>
+        <p class="italic">{{ data.competence_passive.competence.description }}</p>
+        <p class="font-semibold text-lg mt-2">Condition d'activation</p>
+        <p class="font-semibold text-lg mt-2">Marche pas</p>
+        <!--p class="font-semibold">{{ data.competence_passive.condition.nom }}</p-->
+        <!--p class="italic">{{ data.competence_passive.condition.description }}</p-->
         <!--p class="text-italic">{{ data.competence_passive.condition.description }}</p-->
       </div>
     </div>

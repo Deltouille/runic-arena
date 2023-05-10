@@ -61,134 +61,27 @@
       </div>
     </template>
     <template v-slot:drawer-content>
-      <ModalConditionComponent>
-        <InputComponent type="text" title="Nom de la condition" @change="(e) => { condition.nom = e.target.value }" />
-        <TextareaComponent title="Description de la condition" @change="(e) => { condition.description = e.target.value }"/>
-        <SelectComponent title="Type de la condition" @change="(e) => { condition.effet = e.target.value }">
-          <template #select-options>
-            <option value="" selected>Selectionnez un type pour cette condition</option>
-            <option value="Attaque">Attaque</option>
-            <option value="Defend">Defend</option>
-            <option value="Avantage">Avantage</option>
-            <option value="Groupe">Groupe</option>
-          </template>
-        </SelectComponent>
-        <div class="modal-action">
-          <label for="modal-condition" class="btn btn-outline btn-primary" @click="addCondition(condition)">Ajouter</label>
-          <label for="modal-condition" class="btn">Annuler</label>
-        </div>
-      </ModalConditionComponent>
-
       <div v-if="typeAction === 'update'">
-        <h1 class="font-bold text-xl uppercase mb-6">Modification : {{ carte.nom }}</h1>
-        <div class="w-4/5 mx-auto">
-          <InputComponent type="text" title="Modification du nom" :value="carte.nom" @change="(e) => { carte.nom = e.target.value }"/>
-          <InputComponent type="textarea" title="Modification de la description" :value="carte.description" @change="(e) => { carte.description = e.target.value }"/>
-          <InputComponent type="text" title="Modification du type" :value="carte.type" @change="(e) => { carte.type = e.target.value }"/>
-          <InputComponent type="text" title="Modification de l'effet" :value="carte.effet" @change="(e) => { carte.effet = e.target.value }"/>
-          <InputComponent type="number" title="Modification de la valeur" :value="carte.valeur" @change="(e) => { carte.valeur = e.target.value }"/>
-          <div class="flex gap-5 justify-center mt-6">
-            <label class="btn btn-outline btn-primary" for="side-drawer" @click="updateCompetences(carte)">Modifier</label>
-            <label class="btn btn-active" for="side-drawer">Annuler</label>
-          </div>
-        </div>
+        <ViewUpdateCard :data="carte"/>
       </div>
-
       <div v-if="typeAction === 'create'">
-        <h1 class="font-bold text-xl uppercase mb-6">Création d'une carte</h1>
-        <div class="w-4/5 mx-auto">
-
-          <form @submit.prevent="createCarte(carte)" enctype="multipart/form-data">
-            <InputComponent type="text" title="Nom de la nouvelle carte" @change="(e) => { carte.nom = e.target.value }" />
-            <FileInputComponent title="Illustration de la nouvelle carte" @change="(e) => { carte.illustration = e.target.files[0] }"/>
-            <InputComponent type="number" title="Puissance de la nouvelle carte" @change="(e) => { carte.puissance = e.target.value }" />
-            <SelectComponent title="Type de la nouvelle carte" @change="(e) => { carte.type_id = e.target.value }">
-              <template #select-options>
-                <option value="" selected>Selectionnez un type pour cette carte</option>
-                <option v-for="type in listeTypes" :key="type.id" :value="type.id">{{ type.nom }}</option>
-              </template>
-            </SelectComponent>
-            <SelectComponent title="Classe de la nouvelle carte" @change="(e) => { carte.classe_id = e.target.value }">
-              <template #select-options>
-                <option value="" selected>Selectionnez un type pour cette carte</option>
-                <option v-for="classe in listeClasses" :key="classe.id" :value="classe.id">{{ classe.nom }}</option>
-              </template>
-            </SelectComponent>
-            <h2 class="pt-5 text-left text-xl font-bold">Compétences actives</h2>
-            <div class="flex flex-row w-full gap-5">
-              <SelectComponent class="w-2/3" title="Première compétence active" @change="(e) => { carte.comp1 = e.target.value }">
-                <template #select-options>
-                  <option value="" selected>Selectionnez une première compétence active</option>
-                  <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
-                </template>
-              </SelectComponent>
-              <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp1_cout_mana = e.target.value }"/>
-            </div>
-
-            <div class="flex flex-row w-full gap-5">
-              <SelectComponent class="w-2/3" title="Deuxième compétence active" @change="(e) => { carte.comp2 = e.target.value }">
-                <template #select-options>
-                  <option value="" selected>Selectionnez une seconde compétence active</option>
-                  <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
-                </template>
-              </SelectComponent>
-              <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp2_cout_mana = e.target.value }"/>
-            </div>
-
-            <h2 class="pt-5 text-left text-xl font-bold">Compétences passive</h2>
-            <SelectComponent title="" @change="(e) => { carte.competence_passive_id = e.target.value }">
-              <template #select-options>
-                <option value="" selected>Selectionnez une compétence passive</option>
-                <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
-              </template>
-            </SelectComponent>
-
-            <h2 class="pt-5 text-left text-xl font-bold">Condition</h2>
-            <SelectComponent @change="(e) => { condition = e.target.value }">
-              <template #select-options>
-                <option value="" selected>Selectionnez une compétence passive</option>
-                <option v-for="condition in listeConditions" :key="condition.id" :value="condition.id">{{ condition.nom }} - {{ condition.description }}</option>
-              </template>
-            </SelectComponent>
-            <!--p v-if="condition.length !== 0">{{ condition.description }}</p-->
-            <div class="text-left pt-4">
-              <label class="btn btn-primary" for="modal-condition" @click="openModal(carte)">Créer une nouvelle condition</label>
-            </div>
-          </form>
-
-          <div class="flex gap-5 justify-center mt-6">
-            <label for="side-drawer">
-              <button class="btn btn-outline btn-primary" type="submit" @click="createCarte(carte)">Créer</button>
-            </label>
-            <label class="btn btn-active" for="side-drawer">Annuler</label>
-          </div>
-        </div>
+        <ViewCreateCard/>
       </div>
-
       <div v-if="typeAction === 'read'">
-        <h1 class="font-bold text-xl uppercase mb-6 p-4">Informations de la carte</h1>
-        <CardComponent :data="carte"/>
-        <div class="flex gap-5 justify-center mt-6">
-          <label class="btn btn-active" for="side-drawer">Annuler</label>
-        </div>
+        <ViewReadCard :carte="carte"/>
       </div>
     </template>
   </RightDrawer>
 </template>
 
 <script>
-import ModalConditionComponent from "@/components/Administration/Modals/ModalConditionComponent.vue";
-
-document.querySelectorAll('input').forEach(e => e.reportValidity())
-//import CardComponent from "@/components/Administration/CardComponent.vue";
-import InputComponent from "@/components/Administration/Input/InputComponent.vue";
 import TableComponent from "@/components/Administration/Table/TableComponent.vue";
 import ModalComponent from "@/components/Administration/Modals/ModalDelComponent.vue";
 import RightDrawer from "@/components/Administration/RightDrawer.vue";
-import FileInputComponent from "@/components/Administration/Input/FileInputComponent.vue";
-import SelectComponent from "@/components/Administration/Input/SelectComponent.vue";
-import TextareaComponent from "@/components/Administration/Input/TextareaComponent.vue";
-import CardComponent from "@/components/Administration/CardComponent.vue";
+import ViewReadCard from "@/views/Administration/Carte/ViewReadCard.vue";
+import ViewCreateCard from "@/views/Administration/Carte/ViewCreateCard.vue";
+import ViewUpdateCard from "@/views/Administration/Carte/ViewUpdateCard.vue";
+
 export default {
   name: "ViewCartes",
   data() {
@@ -203,18 +96,16 @@ export default {
       condition: {},
     }
   },
+
   components: {
-    CardComponent,
-    TextareaComponent,
-    ModalConditionComponent,
-    SelectComponent,
-    FileInputComponent,
+    ViewUpdateCard,
+    ViewCreateCard,
+    ViewReadCard,
     RightDrawer,
     ModalComponent,
     TableComponent,
-    InputComponent,
-    //CardComponent
   },
+
   methods: {
     async openRightDrawer(type_action, carte){
       this.typeAction = type_action;
@@ -234,95 +125,41 @@ export default {
       this.carte = carte;
     },
 
+    /**
+     * Fonction qui permet de récupèrer toutes les cartes de la base de données
+     * @returns {Promise<void>}
+     */
     async getAllCartes() {
       try {
         const response = await fetch("http://localhost:3000/cards");
-        const data = await response.json();
+        this.listeCartes = await response.json();
 
-        this.listeCartes = data;
-
-        this.listeTypes = await this.getTypes();
-        this.listeClasses = await this.getClasses();
-        this.listeCompetences = await this.getCompetences();
-        this.listeConditions = await this.getConditions();
       } catch (e) {
         console.log(e)
       }
     },
 
-    async getTypes () {
-      try {
-        const response = await fetch("http://localhost:3000/types");
-        return await response.json();
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-    async getClasses() {
-      try {
-        const response = await fetch("http://localhost:3000/classes");
-        return await response.json();
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-    async getCompetences() {
-      try {
-        const response = await fetch("http://localhost:3000/competences");
-        return await response.json();
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
-    async getConditions() {
-      try {
-        const response = await fetch("http://localhost:3000/conditions");
-        return await response.json();
-      } catch (e) {
-        console.log(e)
-      }
-    },
-
+    /**
+     * Fonction qui permet de récupèrer les détails d'une carte
+     * @param carte
+     * @returns {Promise<void>}
+     */
     async getCarteDetails(carte) {
       try {
         const response = await fetch(`http://localhost:3000/cards/${carte.id}`);
         const data = await response.json();
         this.carte = data;
+        console.log(data);
       } catch (e) {
         console.log(e)
       }
     },
 
-    async createCarte(carte) {
-      const formData = new FormData();
-      formData.append('nom', carte.nom);
-      formData.append('illustration', carte.illustration);
-      formData.append('puissance', carte.puissance);
-      formData.append('type_id', carte.type_id);
-      formData.append('classe_id', carte.classe_id);
-      formData.append('comp1', carte.comp1);
-      formData.append('comp1_cout_mana', carte.comp1_cout_mana);
-      formData.append('comp2', carte.comp2);
-      formData.append('comp2_cout_mana', carte.comp2_cout_mana);
-      formData.append('competence_passive_id', carte.competence_passive_id);
-
-      try {
-        const response = await fetch(`http://localhost:3000/cards`, {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-          },
-          body: formData
-        });
-        console.log(response);
-      }catch (e){
-        console.log(e);
-      }
-    },
-
+    /**
+     * Fonction qui permet de supprimer une carte avec l'API
+     * @param carte
+     * @returns {Promise<void>}
+     */
     async deleteCard(carte){
       try{
         const response = await fetch(`http://localhost:3000/cards/${carte.id}`, {
@@ -337,28 +174,6 @@ export default {
         console.log(e)
       }
       await this.resetData();
-    },
-
-    async updateCard(){
-
-    },
-
-    async addCondition(condition){
-      console.log(condition)
-      try {
-        const response = await fetch(`http://localhost:3000/conditions`, {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(condition)
-        });
-        console.log(response);
-        this.listeConditions = await this.getConditions();
-      }catch (e){
-        console.log(e);
-      }
     },
 
     async resetData(){
