@@ -108,7 +108,9 @@ export default {
 
   methods: {
     async openRightDrawer(type_action, carte){
+      console.log(type_action)
       this.typeAction = type_action;
+      console.log(this.typeAction)
 
       if(carte !== null){
         this.carte = carte;

@@ -22,7 +22,7 @@
     <div class="w-4/5 mx-auto">
       <form @submit.prevent="createCarte(carte)" enctype="multipart/form-data">
         <InputComponent type="text" title="Nom de la nouvelle carte" :value="data.nom" @change="(e) => { carte.nom = e.target.value }" />
-        <FileInputComponent title="Illustration de la nouvelle carte" :value="data.illustration" @change="(e) => { carte.illustration = e.target.files[0] }"/>
+        <FileInputComponent title="Illustration de la nouvelle carte" @change="(e) => { carte.illustration = e.target.files[0] }"/>
         <InputComponent type="number" title="Puissance de la nouvelle carte" @change="(e) => { carte.puissance = e.target.value }" />
         <SelectComponent title="Type de la nouvelle carte" :value="data.type_id" @change="(e) => { carte.type_id = e.target.value }">
           <template #select-options>
