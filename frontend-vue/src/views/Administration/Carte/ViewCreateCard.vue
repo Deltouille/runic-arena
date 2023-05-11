@@ -37,24 +37,24 @@
           </template>
         </SelectComponent>
         <h2 class="pt-5 text-left text-xl font-bold">Compétences actives</h2>
-        <div class="flex flex-row w-full gap-5">
-          <SelectComponent class="w-2/3" title="Première compétence active" @change="(e) => { carte.comp1 = e.target.value }">
+        <div class="flex flex-col lg:flex-row w-full gap-5">
+          <SelectComponent class="w-full lg:w-2/3" title="Première compétence active" @change="(e) => { carte.comp1 = e.target.value }">
             <template #select-options>
               <option value="" selected>Selectionnez une première compétence active</option>
               <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
             </template>
           </SelectComponent>
-          <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp1_cout_mana = e.target.value }"/>
+          <InputComponent class="w-full lg:w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp1_cout_mana = e.target.value }"/>
         </div>
 
-        <div class="flex flex-row w-full gap-5">
-          <SelectComponent class="w-2/3" title="Deuxième compétence active" @change="(e) => { carte.comp2 = e.target.value }">
+        <div class="flex flex-col lg:flex-row w-full gap-5">
+          <SelectComponent class="w-full lg:w-2/3" title="Deuxième compétence active" @change="(e) => { carte.comp2 = e.target.value }">
             <template #select-options>
               <option value="" selected>Selectionnez une seconde compétence active</option>
               <option v-for="competence in listeCompetences" :key="competence.id" :value="competence.id">{{ competence.nom }}</option>
             </template>
           </SelectComponent>
-          <InputComponent class="w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp2_cout_mana = e.target.value }"/>
+          <InputComponent class="w-full lg:w-1/3" type="number" title="Cout mana" @change="(e) => { carte.comp2_cout_mana = e.target.value }"/>
         </div>
 
         <h2 class="pt-5 text-left text-xl font-bold">Compétences passive</h2>
