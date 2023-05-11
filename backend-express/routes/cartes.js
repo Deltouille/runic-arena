@@ -160,7 +160,7 @@ router.post('/', upload.single("illustration"), async function(req, res){
     res.status(200).json({ message: 'Carte bien créer.'})
 });
 
-router.put('/', async function(req, res){
+router.put('/', upload.single("illustration"), async function(req, res){
     const competences_actives = [];
 
     if(req.body.comp1){
@@ -189,27 +189,55 @@ router.put('/', async function(req, res){
         competences_actives.push(competence2);
     }
 
-    const carte = await prisma.carte.update({
-        where: {
-            id: parseInt(req.body.id)
-        },
-        data: {
+    console.log(req.file)
+
+    if(req.file !== undefined){
+        const data = {
             nom: req.body.nom,
-            illustration: req.body.illustration,
+            illustration: req.file.filename,
             puissance: req.body.puissance,
             type_id: req.body.type,
             classe: req.body.classe,
             competences_active: {
-                create: competences_actives
+                connect: competences_actives
             },
             competence_passive: {
                 connect: {
                     id: req.body.competence_passive
                 }
             }
-
         }
-    })
+
+        const carte = await prisma.carte.update({
+            where: {
+                id: parseInt(req.body.id)
+            },
+            data: data
+        });
+    }else{
+        const data = {
+            nom: req.body.nom,
+            puissance: req.body.puissance,
+            type_id: req.body.type,
+            classe: req.body.classe,
+            competences_active: {
+                connect: competences_actives
+            },
+            competence_passive: {
+                connect: {
+                    id: req.body.competence_passive
+                }
+            }
+        }
+
+        const carte = await prisma.carte.update({
+            where: {
+                id: parseInt(req.body.id)
+            },
+            data: data
+        });
+    }
+
 
     res.status(200).json({ message: 'Auteur bien modifié.'})
 });

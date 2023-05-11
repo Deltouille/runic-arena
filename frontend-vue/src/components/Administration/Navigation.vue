@@ -16,9 +16,6 @@
             <li>
               <router-link to="/administration">Administration</router-link>
             </li>
-            <li>
-              <a>Navbar Item 2</a>
-            </li>
           </ul>
         </div>
       </div>

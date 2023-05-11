@@ -3,7 +3,6 @@
     <template v-slot:page-content>
       <ModalComponent :title="carte.nom">
         <p class="py-4">Êtes-vous sûr de vouloir supprimer cette carte ?</p>
-        <p class="py-4">Cela supprimeras toutes les cartes associèes.</p>
         <div class="modal-action">
           <label for="modal" class="btn btn-outline btn-error" @click="deleteCard(carte)">Supprimer</label>
           <label for="modal" class="btn" @click="closeRightDrawerOrModal()">Annuler</label>
